@@ -6,7 +6,7 @@ import (
     "os"
     "github.com/stretchr/testify/assert"
     "time"
-    "local/ftapi"
+    ftapi "github.com/Financial-Times/go-ftapi"
 )
 
 var test_notifications *ftapi.Notifications
@@ -43,11 +43,11 @@ func TestGetNextRawNotifications(t *testing.T) {
 func TestGetAllNotifications(t *testing.T) {
     a := assert.New(t)
 
-    result, err := test_notifications_client.GetAllNotifications(2 * time.Hour)
+    result, err := test_notifications_client.GetAllNotifications(96 * time.Hour)
 
     // assuming >400 things have been published in the last 96 hours //
 
     a.Nil(err)
-    log.Println("%s notifications in the last 96 hours.", len(result))
+    log.Printf("%d notifications in the last 96 hours.", len(result))
     a.True(len(result)>400, "Should be more than 400 notifications.")
 }

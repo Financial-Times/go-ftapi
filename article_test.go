@@ -5,7 +5,7 @@ import (
     "log"
     "os"
     "github.com/stretchr/testify/assert"
-    "local/ftapi"
+    ftapi "github.com/Financial-Times/go-ftapi"
 )
 
 var test_article *ftapi.Article

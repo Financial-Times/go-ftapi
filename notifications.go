@@ -87,17 +87,17 @@ func (c *Client) GetAllNotificationsSince(since time.Time) ([]Notification, erro
     }
 
     combined := result.Notifications
-    log.Printf("First page had %s notifications", len(combined))
+    log.Printf("First page had %d notifications", len(combined))
 
     for {
         result, err = c.GetNextRawNotifications(result)
         if err != nil || result.Notifications == nil {
-            log.Printf("Error after %s notifications", len(combined))
+            log.Printf("Error after %d notifications", len(combined))
             return combined, err
         }
-        log.Printf("Got %s more notifications", len(result.Notifications))
+        log.Printf("Got %d more notifications", len(result.Notifications))
         combined = append(combined, result.Notifications...)
-        log.Printf("Now have %s notifications", len(combined))
+        log.Printf("Now have %d notifications", len(combined))
         if result.Notifications == nil || len(result.Notifications) < 200 {
             log.Printf("No more notifications.")
             break
