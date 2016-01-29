@@ -21,7 +21,10 @@ func TestGetArticle(t *testing.T) {
     result, err := test_article_client.GetArticleByUuid("98ca84ac-a7c3-11e5-955c-1e1d6de94879")
 
     a.Nil(err)
-    a.Equal("http://www.ft.com/thing/98ca84ac-a7c3-11e5-955c-1e1d6de94879", result.ID)
+
+    if a.NotNil(result) {
+        a.Equal("http://www.ft.com/thing/98ca84ac-a7c3-11e5-955c-1e1d6de94879", result.ID)
+    }
 
     test_article = result
 }
@@ -32,5 +35,8 @@ func TestGetMainImageSet(t *testing.T) {
     mainImageSet, err := test_article_client.GetMainImageSet(test_article)
 
     a.Nil(err)
-    a.Equal("http://www.ft.com/thing/ccca5db0-a7da-11e5-0966-bcfc402e40ca", mainImageSet.ID)
+
+    if a.NotNil(mainImageSet) {
+        a.Equal("http://www.ft.com/thing/ccca5db0-a7da-11e5-0966-bcfc402e40ca", mainImageSet.ID)
+    }
 }

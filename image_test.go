@@ -21,7 +21,10 @@ func TestGetImage(t *testing.T) {
     result, err := test_image_client.GetImageByUuid("ccca5db0-a7da-11e5-9700-2b669a5aeb83")
 
     a.Nil(err)
-    a.Equal("http://www.ft.com/thing/ccca5db0-a7da-11e5-9700-2b669a5aeb83", result.ID)
+
+    if a.NotNil(result) {
+        a.Equal("http://www.ft.com/thing/ccca5db0-a7da-11e5-9700-2b669a5aeb83", result.ID)
+    }
 
     test_image = result
 }

@@ -24,7 +24,10 @@ func TestGetRawNotifications(t *testing.T) {
     // assuming >200 things have been published in the last 96 hours //
 
     a.Nil(err)
-    a.Equal(200, len(result.Notifications))
+
+    if a.NotNil(result) {
+        a.Equal(200, len(result.Notifications))
+    }
 
     test_notifications = result
 }
@@ -37,7 +40,10 @@ func TestGetNextRawNotifications(t *testing.T) {
     // assuming >400 things have been published in the last 96 hours //
 
     a.Nil(err)
-    a.Equal(200, len(result.Notifications))
+
+    if a.NotNil(result) {
+        a.Equal(200, len(result.Notifications))
+    }
 }
 
 func TestGetAllNotifications(t *testing.T) {
@@ -48,6 +54,9 @@ func TestGetAllNotifications(t *testing.T) {
     // assuming >400 things have been published in the last 96 hours //
 
     a.Nil(err)
-    log.Printf("%d notifications in the last 96 hours.", len(result))
-    a.True(len(result)>400, "Should be more than 400 notifications.")
+
+    if a.NotNil(result) {
+        log.Printf("%d notifications in the last 96 hours.", len(result))
+        a.True(len(result)>400, "Should be more than 400 notifications.")
+    }
 }
