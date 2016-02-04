@@ -14,6 +14,11 @@ type Client struct {
 }
 
 func (c *Client) getJsonAtUrl(url string, obj interface{}) (error) {
+    return c.getJsonAtUrlWithCookie(url, obj, nil)
+}
+
+func (c *Client) getJsonAtUrlWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
+
     log.Println("Getting",url)
 
     client := &http.Client{}
@@ -25,6 +30,11 @@ func (c *Client) getJsonAtUrl(url string, obj interface{}) (error) {
     }
 
     req.Header.Add("X-Api-Key", c.Key)
+
+    if cookie != nil {
+        req.AddCookie(cookie)
+    }
+
     resp, err := client.Do(req)
     if err != nil {
         log.Println("Failed to execute request for ",url)
@@ -48,12 +58,6 @@ func (c *Client) getJsonAtUrl(url string, obj interface{}) (error) {
                 log.Println("Failed to decode JSON from",read)
             }
             return err
-        }
-        read, err2 := ioutil.ReadAll(resp.Body)
-        if err2 != nil {
-            log.Println("Decoded JSON but encountered an error trying to read the body")
-        } else {
-            log.Println("Decoded JSON from",read)
         }
         log.Println("Got",obj)
         return nil
