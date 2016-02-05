@@ -11,14 +11,14 @@ import (
 var test_imageset *ftapi.ImageSet
 var test_imageset_client *ftapi.Client
 
-func TestGetImageSet(t *testing.T) {
+func TestImageSet(t *testing.T) {
     a := assert.New(t)
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
     test_imageset_client = &ftapi.Client{key}
 
-    result, err := test_imageset_client.GetImageSetByUuid("e1ee1f3a-8fbe-11e5-1582-a29c65546762")
+    result, err := test_imageset_client.ImageSetByUuid("e1ee1f3a-8fbe-11e5-1582-a29c65546762")
 
     a.Nil(err)
 
@@ -29,10 +29,10 @@ func TestGetImageSet(t *testing.T) {
     test_imageset = result
 }
 
-func TestGetImageSetMembers(t *testing.T) {
+func TestImageSetMembers(t *testing.T) {
     a := assert.New(t)
 
-    images, err := test_imageset_client.GetImageSetMembers(test_imageset, 0)
+    images, err := test_imageset_client.ImageSetMembers(test_imageset, 0)
 
     a.Nil(err)
 

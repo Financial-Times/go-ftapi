@@ -22,7 +22,7 @@ type Notifications struct {
 
 var ZuluTime = time.FixedZone("Z", 0)
 
-func (c *Client) GetRawNotificationsSince(since time.Time) (*Notifications, error) {
+func (c *Client) RawNotificationsSince(since time.Time) (*Notifications, error) {
     since = since.In(ZuluTime).Truncate(time.Second)
 
     rfc_since, err := since.MarshalText()
@@ -32,11 +32,11 @@ func (c *Client) GetRawNotificationsSince(since time.Time) (*Notifications, erro
 
 	url := "https://api.ft.com/content/notifications/?since=" + string(rfc_since)
 	result := &Notifications{}
-	err = c.getJsonAtUrl(url, result)
+	err = c.jsonAtUrl(url, result)
 	return result, err
 }
 
-func (c *Client) GetNextRawNotifications(after *Notifications) (*Notifications, error) {
+func (c *Client) NextRawNotifications(after *Notifications) (*Notifications, error) {
     if after.Links == nil || len(after.Links)==0 {
         return nil, nil
     }
@@ -56,18 +56,18 @@ func (c *Client) GetNextRawNotifications(after *Notifications) (*Notifications, 
     log.Printf("%s -> %s", after.RequestUrl, since_url)
 
 	result := &Notifications{}
-	err := c.getJsonAtUrl(since_url, result)
+	err := c.jsonAtUrl(since_url, result)
 	return result, err
 }
 
 
-func (c *Client) GetNotifications(duration time.Duration) ([]Notification, error) {
+func (c *Client) Notifications(duration time.Duration) ([]Notification, error) {
 	since := time.Now().Add(-duration)
-    return c.GetNotificationsSince(since)
+    return c.NotificationsSince(since)
 }
 
-func (c *Client) GetNotificationsSince(since time.Time) ([]Notification, error) {
-    result, err := c.GetRawNotificationsSince(since)
+func (c *Client) NotificationsSince(since time.Time) ([]Notification, error) {
+    result, err := c.RawNotificationsSince(since)
     if result == nil {
         return nil, err
     } else {
@@ -75,13 +75,13 @@ func (c *Client) GetNotificationsSince(since time.Time) ([]Notification, error) 
     }
 }
 
-func (c *Client) GetAllNotifications(duration time.Duration) ([]Notification, error) {
+func (c *Client) AllNotifications(duration time.Duration) ([]Notification, error) {
 	since := time.Now().Add(-duration)
-    return c.GetAllNotificationsSince(since)
+    return c.AllNotificationsSince(since)
 }
 
-func (c *Client) GetAllNotificationsSince(since time.Time) ([]Notification, error) {
-    result, err := c.GetRawNotificationsSince(since)
+func (c *Client) AllNotificationsSince(since time.Time) ([]Notification, error) {
+    result, err := c.RawNotificationsSince(since)
     if err != nil {
         return nil, err
     }
@@ -90,7 +90,7 @@ func (c *Client) GetAllNotificationsSince(since time.Time) ([]Notification, erro
     log.Printf("First page had %d notifications", len(combined))
 
     for {
-        result, err = c.GetNextRawNotifications(result)
+        result, err = c.NextRawNotifications(result)
         if err != nil || result.Notifications == nil {
             log.Printf("Error after %d notifications", len(combined))
             return combined, err
@@ -111,7 +111,7 @@ func (c *Client) Listen(start time.Time, sleep time.Duration) (chan Notification
     ch := make(chan Notification)
 
     go func() {
-        result, err := c.GetRawNotificationsSince(start)
+        result, err := c.RawNotificationsSince(start)
         if err != nil {
             log.Println("Error getting notifications:",err)
         }
@@ -128,7 +128,7 @@ func (c *Client) Listen(start time.Time, sleep time.Duration) (chan Notification
 
             time.Sleep(sleep)
 
-            result, err = c.GetNextRawNotifications(result)
+            result, err = c.NextRawNotifications(result)
             if err != nil {
                 log.Println("Error getting notifications:",err)
             }

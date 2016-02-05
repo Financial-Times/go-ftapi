@@ -10,14 +10,14 @@ import (
 
 var test_recommendations_client *ftapi.Client
 
-func TestGetContextualRecommendationsByUuid(t *testing.T) {
+func TestContextualRecommendationsByUuid(t *testing.T) {
     a := assert.New(t)
 
     key := os.Getenv("RR_API_KEY")
     log.Println("Using API key: ",key)
     test_recommendations_client = &ftapi.Client{key}
 
-    result, err := test_recommendations_client.GetContextualRecommendationsByUuid("24b6f48a-c675-11e5-b3b1-7b2481276e45")
+    result, err := test_recommendations_client.ContextualRecommendationsByUuid("24b6f48a-c675-11e5-b3b1-7b2481276e45", 10, 7)
 
     a.Nil(err)
 
@@ -26,13 +26,13 @@ func TestGetContextualRecommendationsByUuid(t *testing.T) {
     }
 }
 
-func TestGetBehaviouralRecommendationsByUuid(t *testing.T) {
+func TestBehaviouralRecommendationsByUuid(t *testing.T) {
     a := assert.New(t)
 
     userid := os.Getenv("FT_USERID")
     log.Println("Using user id: ",userid)
 
-    result, err := test_recommendations_client.GetBehaviouralRecommendationsByUuid("24b6f48a-c675-11e5-b3b1-7b2481276e45", userid)
+    result, err := test_recommendations_client.BehaviouralRecommendationsByUuid("24b6f48a-c675-11e5-b3b1-7b2481276e45", userid, 10, 7)
 
     a.Nil(err)
 
@@ -41,13 +41,13 @@ func TestGetBehaviouralRecommendationsByUuid(t *testing.T) {
     }
 }
 
-func TestGetBehaviouralRecommendations(t *testing.T) {
+func TestBehaviouralRecommendations(t *testing.T) {
     a := assert.New(t)
 
     userid := os.Getenv("FT_USERID")
     log.Println("Using user id: ",userid)
 
-    result, err := test_recommendations_client.GetBehaviouralRecommendations(userid)
+    result, err := test_recommendations_client.BehaviouralRecommendations(userid, 10, 7)
 
     a.Nil(err)
 
@@ -56,10 +56,10 @@ func TestGetBehaviouralRecommendations(t *testing.T) {
     }
 }
 
-func TestGetPopularRecommendations(t *testing.T) {
+func TestPopularRecommendations(t *testing.T) {
     a := assert.New(t)
 
-    result, err := test_recommendations_client.GetPopularRecommendations()
+    result, err := test_recommendations_client.PopularRecommendations(10, 7)
 
     a.Nil(err)
 

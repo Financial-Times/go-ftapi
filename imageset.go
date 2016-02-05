@@ -16,24 +16,24 @@ type ImageSet struct {
 	Type          string `json:"type"`
 }
 
-func (c *Client) GetImageSetByUuid(uuid string) (result *ImageSet, err error) {
+func (c *Client) ImageSetByUuid(uuid string) (result *ImageSet, err error) {
 	url := "https://api.ft.com/content/" + uuid
-	return c.GetImageSet(url)
+	return c.ImageSet(url)
 }
 
-func (c *Client) GetImageSet(url string) (result *ImageSet, err error) {
+func (c *Client) ImageSet(url string) (result *ImageSet, err error) {
 	result = &ImageSet{}
-	err = c.getJsonAtUrl(url, result)
+	err = c.jsonAtUrl(url, result)
 	return result, err
 }
 
-func (c *Client) GetImageSetMembers(imageset *ImageSet, timeout_ms int64) (result []*Image, err error) {
+func (c *Client) ImageSetMembers(imageset *ImageSet, timeout_ms int64) (result []*Image, err error) {
 	images_ch := make(chan *Image)
 
 	for _, member := range imageset.Members {
         log.Println(len(imageset.Members), "images to get:", member.ID, c)
 		go func(url string) {
-			image, err := c.GetImage(url)
+			image, err := c.Image(url)
 			if err != nil {
 				return
 			}

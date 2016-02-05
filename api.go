@@ -13,11 +13,11 @@ type Client struct {
     Key string
 }
 
-func (c *Client) getJsonAtUrl(url string, obj interface{}) (error) {
-    return c.getJsonAtUrlWithCookie(url, obj, nil)
+func (c *Client) jsonAtUrl(url string, obj interface{}) (error) {
+    return c.jsonAtUrlWithCookie(url, obj, nil)
 }
 
-func (c *Client) getJsonAtUrlWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
+func (c *Client) jsonAtUrlWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
 
     log.Println("Getting",url)
 

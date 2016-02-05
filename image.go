@@ -12,13 +12,13 @@ type Image struct {
     Type          string  `json:"type"`
 }
 
-func (c *Client) GetImageByUuid(uuid string) (result *Image, err error) {
+func (c *Client) ImageByUuid(uuid string) (result *Image, err error) {
     url := "https://api.ft.com/content/"+uuid
-    return c.GetImage(url)
+    return c.Image(url)
 }
 
-func (c *Client) GetImage(url string) (result *Image, err error) {
+func (c *Client) Image(url string) (result *Image, err error) {
     result = &Image{}
-    err = c.getJsonAtUrl(url, result)
+    err = c.jsonAtUrl(url, result)
     return result, err
 }

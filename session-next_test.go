@@ -5,9 +5,7 @@ import (
     "log"
 )
 
-func TestGetNextSession(t *testing.T) {
-    a := assert.New(t)
-
+func TestNextSession(t *testing.T) {
     log.Println("WARNING: Didn't test session-next, as can't set up a session")
 }
 

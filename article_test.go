@@ -11,14 +11,14 @@ import (
 var test_article *ftapi.Article
 var test_article_client *ftapi.Client
 
-func TestGetArticle(t *testing.T) {
+func TestArticle(t *testing.T) {
     a := assert.New(t)
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
     test_article_client = &ftapi.Client{key}
 
-    result, err := test_article_client.GetArticleByUuid("98ca84ac-a7c3-11e5-955c-1e1d6de94879")
+    result, err := test_article_client.ArticleByUuid("98ca84ac-a7c3-11e5-955c-1e1d6de94879")
 
     a.Nil(err)
 
@@ -29,10 +29,10 @@ func TestGetArticle(t *testing.T) {
     test_article = result
 }
 
-func TestGetMainImageSet(t *testing.T) {
+func TestMainImageSet(t *testing.T) {
     a := assert.New(t)
 
-    mainImageSet, err := test_article_client.GetMainImageSet(test_article)
+    mainImageSet, err := test_article_client.MainImageSet(test_article)
 
     a.Nil(err)
 

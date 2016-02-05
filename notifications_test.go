@@ -12,14 +12,14 @@ import (
 var test_notifications *ftapi.Notifications
 var test_notifications_client *ftapi.Client
 
-func TestGetRawNotifications(t *testing.T) {
+func TestRawNotifications(t *testing.T) {
     a := assert.New(t)
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
     test_notifications_client = &ftapi.Client{key}
 
-    result, err := test_notifications_client.GetRawNotificationsSince(time.Now().Add(-96 * time.Hour))
+    result, err := test_notifications_client.RawNotificationsSince(time.Now().Add(-96 * time.Hour))
 
     // assuming >200 things have been published in the last 96 hours //
 
@@ -32,10 +32,10 @@ func TestGetRawNotifications(t *testing.T) {
     test_notifications = result
 }
 
-func TestGetNextRawNotifications(t *testing.T) {
+func TestNextRawNotifications(t *testing.T) {
     a := assert.New(t)
 
-    result, err := test_notifications_client.GetNextRawNotifications(test_notifications)
+    result, err := test_notifications_client.NextRawNotifications(test_notifications)
 
     // assuming >400 things have been published in the last 96 hours //
 
@@ -46,10 +46,10 @@ func TestGetNextRawNotifications(t *testing.T) {
     }
 }
 
-func TestGetAllNotifications(t *testing.T) {
+func TestAllNotifications(t *testing.T) {
     a := assert.New(t)
 
-    result, err := test_notifications_client.GetAllNotifications(96 * time.Hour)
+    result, err := test_notifications_client.AllNotifications(96 * time.Hour)
 
     // assuming >400 things have been published in the last 96 hours //
 

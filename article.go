@@ -18,20 +18,20 @@ type Article struct {
     }                    `json:"comments"`
 }
 
-func (c *Client) GetArticleByUuid(uuid string) (result *Article, err error) {
+func (c *Client) ArticleByUuid(uuid string) (result *Article, err error) {
     url := "https://api.ft.com/content/"+uuid
-    return c.GetArticle(url)
+    return c.Article(url)
 }
 
-func (c *Client) GetArticle(url string) (result *Article, err error) {
+func (c *Client) Article(url string) (result *Article, err error) {
     result = &Article{}
-    err = c.getJsonAtUrl(url, result)
+    err = c.jsonAtUrl(url, result)
     return result, err
 }
 
-func (c *Client) GetMainImageSet(article *Article) (result *ImageSet, err error) {
+func (c *Client) MainImageSet(article *Article) (result *ImageSet, err error) {
     if article.MainImage.ID == "" {
         return nil, nil
     }
-    return c.GetImageSet(article.MainImage.ID)
+    return c.ImageSet(article.MainImage.ID)
 }

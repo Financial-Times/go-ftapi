@@ -18,11 +18,11 @@ type NextSession struct {
     Uuid           string `json:"uuid"`
 }
 
-func (c *Client) GetNextSessionFromCookie(cookie *http.Cookie) (*NextSession, error) {
+func (c *Client) NextSessionFromCookie(cookie *http.Cookie) (*NextSession, error) {
 
 	url := "https://session-next.ft.com/"
 	result := &NextSession{}
-	err := c.getJsonAtUrlWithCookie(url, result, cookie)
+	err := c.jsonAtUrlWithCookie(url, result, cookie)
 	return result, err
 
 }

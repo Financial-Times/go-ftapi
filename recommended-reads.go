@@ -2,6 +2,7 @@ package ftapi
 
 import (
         "net/url"
+        "strconv"
 )
 
 type Recommendation struct {
@@ -19,53 +20,53 @@ type Recommendations struct {
     Version string `json:"version"`
 }
 
-func (c *Client) GetContextualRecommendationsByUuid(uuid string) (result *Recommendations, err error) {
+func (c *Client) ContextualRecommendationsByUuid(uuid string, count int, recency int) (result *Recommendations, err error) {
     u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/contextual")
     q := u.Query()
     q.Set("contentid", uuid)
-    q.Set("count", "10")
+    q.Set("count", strconv.Itoa(count))
     q.Set("sort", "rel")
-    q.Set("recency", "7")
+    q.Set("recency", strconv.Itoa(recency))
     u.RawQuery = q.Encode()
     result = &Recommendations{}
-    err = c.getJsonAtUrl(u.String(), result)
+    err = c.jsonAtUrl(u.String(), result)
     return result, err
 }
 
-func (c *Client) GetBehaviouralRecommendationsByUuid(uuid string, userid string) (result *Recommendations, err error) {
+func (c *Client) BehaviouralRecommendationsByUuid(uuid string, userid string, count int, recency int) (result *Recommendations, err error) {
     u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/behavioural")
     q := u.Query()
     q.Set("contentid", uuid)
     q.Set("userid", userid)
-    q.Set("count", "10")
+    q.Set("count", strconv.Itoa(count))
     q.Set("sort", "rel")
-    q.Set("recency", "7")
+    q.Set("recency", strconv.Itoa(recency))
     u.RawQuery = q.Encode()
     result = &Recommendations{}
-    err = c.getJsonAtUrl(u.String(), result)
+    err = c.jsonAtUrl(u.String(), result)
     return result, err
 }
 
-func (c *Client) GetBehaviouralRecommendations(userid string) (result *Recommendations, err error) {
+func (c *Client) BehaviouralRecommendations(userid string, count int, recency int) (result *Recommendations, err error) {
     u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/behavioural")
     q := u.Query()
     q.Set("userid", userid)
-    q.Set("count", "10")
+    q.Set("count", strconv.Itoa(count))
     q.Set("sort", "rel")
-    q.Set("recency", "7")
+    q.Set("recency", strconv.Itoa(recency))
     u.RawQuery = q.Encode()
     result = &Recommendations{}
-    err = c.getJsonAtUrl(u.String(), result)
+    err = c.jsonAtUrl(u.String(), result)
     return result, err
 }
 
-func (c *Client) GetPopularRecommendations() (result *Recommendations, err error) {
+func (c *Client) PopularRecommendations(count int, recency int) (result *Recommendations, err error) {
     u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/popular")
     q := u.Query()
-    q.Set("count", "10")
-    q.Set("recency", "7")
+    q.Set("count", strconv.Itoa(count))
+    q.Set("recency", strconv.Itoa(recency))
     u.RawQuery = q.Encode()
     result = &Recommendations{}
-    err = c.getJsonAtUrl(u.String(), result)
+    err = c.jsonAtUrl(u.String(), result)
     return result, err
 }
