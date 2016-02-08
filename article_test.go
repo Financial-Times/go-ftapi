@@ -18,7 +18,7 @@ func TestArticle(t *testing.T) {
     log.Println("Using API key: ",key)
     test_article_client = &ftapi.Client{key}
 
-    result, err := test_article_client.ArticleByUuid("98ca84ac-a7c3-11e5-955c-1e1d6de94879")
+    result, err := test_article_client.ArticleByUUID("98ca84ac-a7c3-11e5-955c-1e1d6de94879")
 
     a.Nil(err)
 

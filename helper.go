@@ -2,14 +2,14 @@ package ftapi
 
 import "regexp"
 
-var UuidRegexp = regexp.MustCompile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
-var FinalUuidRegexp = regexp.MustCompile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+var UUIDRegexp = regexp.MustCompile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
+var FinalUUIDRegexp = regexp.MustCompile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 
-func Uuid(url string) string {
-    return UuidRegexp.FindString(url)
+func UUID(url string) string {
+    return UUIDRegexp.FindString(url)
 }
 
-func FinalUuid(url string) string {
-    return FinalUuidRegexp.FindString(url)
+func FinalUUID(url string) string {
+    return FinalUUIDRegexp.FindString(url)
 }
 

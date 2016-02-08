@@ -9,23 +9,23 @@ type Article struct {
         ID string        `json:"id"`
     }                    `json:"mainImage"`
     PublishedDate string `json:"publishedDate"`
-    RequestUrl    string `json:"requestUrl"`
+    RequestURL    string `json:"requestUrl"`
     Title         string `json:"title"`
     Type          string `json:"type"`
-    WebUrl        string `json:"webUrl"`
+    WebURL        string `json:"webUrl"`
     Comments struct {
         Enabled bool     `json:"enabled"`
     }                    `json:"comments"`
 }
 
-func (c *Client) ArticleByUuid(uuid string) (result *Article, err error) {
+func (c *Client) ArticleByUUID(uuid string) (result *Article, err error) {
     url := "https://api.ft.com/content/"+uuid
     return c.Article(url)
 }
 
 func (c *Client) Article(url string) (result *Article, err error) {
     result = &Article{}
-    err = c.jsonAtUrl(url, result)
+    err = c.jsonAtURL(url, result)
     return result, err
 }
 

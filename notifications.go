@@ -6,18 +6,18 @@ import (
 )
 
 type Notification struct {
-    ApiUrl string `json:"apiUrl"`
+    APIURL string `json:"apiUrl"`
     ID     string `json:"id"`
     Type   string `json:"type"`
 }
 
 type Notifications struct {
     Links []struct {
-        Href string `json:"href"`
+        HRef string `json:"href"`
         Rel  string `json:"rel"`
     } `json:"links"`
     Notifications []Notification `json:"notifications"`
-    RequestUrl string `json:"requestUrl"`
+    RequestURL string `json:"requestUrl"`
 }
 
 var ZuluTime = time.FixedZone("Z", 0)
@@ -25,14 +25,14 @@ var ZuluTime = time.FixedZone("Z", 0)
 func (c *Client) RawNotificationsSince(since time.Time) (*Notifications, error) {
     since = since.In(ZuluTime).Truncate(time.Second)
 
-    rfc_since, err := since.MarshalText()
+    rfcSince, err := since.MarshalText()
     if err != nil {
         return nil, err
     }
 
-	url := "https://api.ft.com/content/notifications/?since=" + string(rfc_since)
+	url := "https://api.ft.com/content/notifications/?since=" + string(rfcSince)
 	result := &Notifications{}
-	err = c.jsonAtUrl(url, result)
+	err = c.jsonAtURL(url, result)
 	return result, err
 }
 
@@ -41,22 +41,22 @@ func (c *Client) NextRawNotifications(after *Notifications) (*Notifications, err
         return nil, nil
     }
 
-    var since_url string
+    var sinceURL string
 
     for _,item := range after.Links {
         if item.Rel == "next" {
-            since_url = item.Href
+            sinceURL = item.HRef
         }
     }
 
-    if since_url == "" {
+    if sinceURL == "" {
         return nil, nil
     }
 
-    log.Printf("%s -> %s", after.RequestUrl, since_url)
+    log.Printf("%s -> %s", after.RequestURL, sinceURL)
 
 	result := &Notifications{}
-	err := c.jsonAtUrl(since_url, result)
+	err := c.jsonAtURL(sinceURL, result)
 	return result, err
 }
 
@@ -70,9 +70,8 @@ func (c *Client) NotificationsSince(since time.Time) ([]Notification, error) {
     result, err := c.RawNotificationsSince(since)
     if result == nil {
         return nil, err
-    } else {
-        return result.Notifications, err
     }
+    return result.Notifications, err
 }
 
 func (c *Client) AllNotifications(duration time.Duration) ([]Notification, error) {

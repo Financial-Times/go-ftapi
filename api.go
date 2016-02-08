@@ -13,11 +13,11 @@ type Client struct {
     Key string
 }
 
-func (c *Client) jsonAtUrl(url string, obj interface{}) (error) {
-    return c.jsonAtUrlWithCookie(url, obj, nil)
+func (c *Client) jsonAtURL(url string, obj interface{}) (error) {
+    return c.jsonAtURLWithCookie(url, obj, nil)
 }
 
-func (c *Client) jsonAtUrlWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
+func (c *Client) jsonAtURLWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
 
     log.Println("Getting",url)
 
@@ -29,7 +29,7 @@ func (c *Client) jsonAtUrlWithCookie(url string, obj interface{}, cookie *http.C
         return err
     }
 
-    req.Header.Add("X-Api-Key", c.Key)
+    req.Header.Add("X-API-Key", c.Key)
 
     if cookie != nil {
         req.AddCookie(cookie)
@@ -46,21 +46,23 @@ func (c *Client) jsonAtUrlWithCookie(url string, obj interface{}, cookie *http.C
     if err != nil {
         log.Println("Failed to get ",url)
         return err
-    } else {
-        if (resp.StatusCode != 200) {
-            return fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
-        }
-        if err := json.NewDecoder(resp.Body).Decode(&obj); err != nil {
-            read, err2 := ioutil.ReadAll(resp.Body)
-            if err2 != nil {
-                log.Println("Failed to decode JSON and encountered an error trying to read the body")
-            } else {
-                log.Println("Failed to decode JSON from",read)
-            }
-            return err
-        }
-        log.Println("Got",obj)
-        return nil
     }
+
+    if (resp.StatusCode != 200) {
+        return fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
+    }
+
+    if err := json.NewDecoder(resp.Body).Decode(&obj); err != nil {
+        read, err2 := ioutil.ReadAll(resp.Body)
+        if err2 != nil {
+            log.Println("Failed to decode JSON and encountered an error trying to read the body")
+        } else {
+            log.Println("Failed to decode JSON from",read)
+        }
+        return err
+    }
+
+    log.Println("Got",obj)
+    return nil
 }
 
