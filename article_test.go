@@ -29,6 +29,24 @@ func TestArticle(t *testing.T) {
     test_article = result
 }
 
+func TestEnrichedArticle(t *testing.T) {
+    a := assert.New(t)
+
+    key := os.Getenv("FT_API_KEY")
+    log.Println("Using API key: ",key)
+    test_article_client = &ftapi.Client{key}
+
+    result, err := test_article_client.EnrichedArticle("http://api.ft.com/content/98ca84ac-a7c3-11e5-955c-1e1d6de94879")
+
+    a.Nil(err)
+
+    if a.NotNil(result) {
+        a.Equal("http://www.ft.com/thing/98ca84ac-a7c3-11e5-955c-1e1d6de94879", result.ID)
+    }
+
+    test_article = result
+}
+
 func TestMainImageSet(t *testing.T) {
     a := assert.New(t)
 

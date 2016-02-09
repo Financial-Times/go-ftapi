@@ -1,6 +1,17 @@
 package ftapi
 
+type Annotation struct {
+    APIURL     string   `json:"apiUrl"`
+    DirectType string   `json:"directType"`
+    ID         string   `json:"id"`
+    Predicate  string   `json:"predicate"`
+    PrefLabel  string   `json:"prefLabel"`
+    Type       string   `json:"type"`
+    Types      []string `json:"types"`
+}
+
 type Article struct {
+    Annotations []Annotation  `json:"annotations"`
     BodyXML   string     `json:"bodyXML"`
     Brands    []string   `json:"brands"`
     Byline    string     `json:"byline"`
@@ -21,6 +32,15 @@ type Article struct {
 func (c *Client) ArticleByUUID(uuid string) (result *Article, err error) {
     url := "https://api.ft.com/content/"+uuid
     return c.Article(url)
+}
+
+func (c *Client) EnrichedArticleByUUID(uuid string) (result *Article, err error) {
+    url := "https://api.ft.com/enrichedcontent/"+uuid
+    return c.Article(url)
+}
+
+func (c *Client) EnrichedArticle(url string) (result *Article, err error) {
+    return c.EnrichedArticleByUUID(FinalUUID(url))
 }
 
 func (c *Client) Article(url string) (result *Article, err error) {

@@ -13,7 +13,7 @@ type Notification struct {
 
 type Notifications struct {
     Links []struct {
-        HRef string `json:"href"`
+        Href string `json:"href"`
         Rel  string `json:"rel"`
     } `json:"links"`
     Notifications []Notification `json:"notifications"`
@@ -45,7 +45,7 @@ func (c *Client) NextRawNotifications(after *Notifications) (*Notifications, err
 
     for _,item := range after.Links {
         if item.Rel == "next" {
-            sinceURL = item.HRef
+            sinceURL = item.Href
         }
     }
 
