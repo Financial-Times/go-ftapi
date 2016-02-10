@@ -4,6 +4,7 @@ import "regexp"
 
 type ontology struct {
 	Organisation   string
+	PublicCompany  string
 	Person         string
 	Brand          string
 	Article        string
@@ -11,7 +12,9 @@ type ontology struct {
 	IsClassifiedBy string
 }
 
-var Ontology = ontology{Organisation: "http://www.ft.com/ontology/organisation/Organisation",
+var Ontology = ontology{
+	Organisation:   "http://www.ft.com/ontology/organisation/Organisation",
+	PublicCompany:  "http://www.ft.com/ontology/company/PublicCompany",
 	Person:         "http://www.ft.com/ontology/person/Person",
 	Brand:          "http://www.ft.com/ontology/product/Brand",
 	Article:        "http://www.ft.com/ontology/content/Article",
