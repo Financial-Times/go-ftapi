@@ -23,7 +23,7 @@ func (c *Client) ImageSetByUUID(uuid string) (result *ImageSet, err error) {
 
 func (c *Client) ImageSet(url string) (result *ImageSet, err error) {
 	result = &ImageSet{}
-	err = c.jsonAtURL(url, result)
+	err = c.FromURL(url, result)
 	return result, err
 }
 

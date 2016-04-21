@@ -49,7 +49,7 @@ func (c *Client) EnrichedArticle(url string) (result *Article, err error) {
 
 func (c *Client) Article(url string) (result *Article, err error) {
 	result = &Article{}
-	err = c.jsonAtURL(url, result)
+	err = c.FromURL(url, result)
 	return result, err
 }
 

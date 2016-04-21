@@ -32,7 +32,7 @@ func (c *Client) RawNotificationsSince(since time.Time) (*Notifications, error) 
 
 	url := "https://api.ft.com/content/notifications/?since=" + string(rfcSince)
 	result := &Notifications{}
-	err = c.jsonAtURL(url, result)
+	err = c.FromURL(url, result)
 	return result, err
 }
 
@@ -56,7 +56,7 @@ func (c *Client) NextRawNotifications(after *Notifications) (*Notifications, err
     log.Printf("%s -> %s", after.RequestURL, sinceURL)
 
 	result := &Notifications{}
-	err := c.jsonAtURL(sinceURL, result)
+	err := c.FromURL(sinceURL, result)
 	return result, err
 }
 

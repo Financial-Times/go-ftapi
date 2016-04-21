@@ -13,14 +13,24 @@ type Client struct {
     Key string
 }
 
-func (c *Client) jsonAtURL(url string, obj interface{}) (error) {
-    return c.jsonAtURLWithCookie(url, obj, nil)
+func (c *Client) FromURL(url string, obj interface{}) (error) {
+    return c.FromURLWithCookie(url, obj, nil)
 }
 
-func (c *Client) jsonAtURLWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
+func (c *Client) FromPath(path string, obj interface{}) (error) {
+    data, err := ioutil.ReadFile(path)
+    if err != nil {
+        return err
+    }
 
-    log.Println("Getting",url)
+    if err := json.Unmarshal(data, &obj); err != nil {
+        return err
+    }
 
+    return nil
+}
+
+func (c *Client) FromURLWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
     client := &http.Client{}
 
     req, err := http.NewRequest("GET", url, nil)
@@ -52,7 +62,7 @@ func (c *Client) jsonAtURLWithCookie(url string, obj interface{}, cookie *http.C
         return fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
     }
 
-    if err := json.NewDecoder(resp.Body).Decode(&obj); err != nil {
+    if err := json.NewDecoder(resp.Body).Decode(obj); err != nil {
         read, err2 := ioutil.ReadAll(resp.Body)
         if err2 != nil {
             log.Println("Failed to decode JSON and encountered an error trying to read the body")
@@ -62,7 +72,6 @@ func (c *Client) jsonAtURLWithCookie(url string, obj interface{}, cookie *http.C
         return err
     }
 
-    log.Println("Got",obj)
     return nil
 }
 

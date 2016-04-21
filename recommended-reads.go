@@ -30,7 +30,7 @@ func (c *Client) RawContextualRecommendationsByUUID(uuid string, count int, rece
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.jsonAtURL(u.String(), result)
+	err = c.FromURL(u.String(), result)
 	return result, err
 }
 
@@ -52,7 +52,7 @@ func (c *Client) RawBehaviouralRecommendationsByUUID(uuid string, userid string,
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.jsonAtURL(u.String(), result)
+	err = c.FromURL(u.String(), result)
 	return result, err
 }
 
@@ -73,7 +73,7 @@ func (c *Client) RawBehaviouralRecommendations(userid string, count int, recency
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.jsonAtURL(u.String(), result)
+	err = c.FromURL(u.String(), result)
 	return result, err
 }
 
@@ -92,7 +92,7 @@ func (c *Client) RawPopularRecommendations(count int, recency int) (result *Reco
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.jsonAtURL(u.String(), result)
+	err = c.FromURL(u.String(), result)
 	return result, err
 }
 

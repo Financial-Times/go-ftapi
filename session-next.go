@@ -22,7 +22,7 @@ func (c *Client) NextSessionFromCookie(cookie *http.Cookie) (*NextSession, error
 
 	url := "https://session-next.ft.com/"
 	result := &NextSession{}
-	err := c.jsonAtURLWithCookie(url, result, cookie)
+	err := c.FromURLWithCookie(url, result, cookie)
 	return result, err
 
 }

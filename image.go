@@ -19,6 +19,6 @@ func (c *Client) ImageByUUID(uuid string) (result *Image, err error) {
 
 func (c *Client) Image(url string) (result *Image, err error) {
     result = &Image{}
-    err = c.jsonAtURL(url, result)
+    err = c.FromURL(url, result)
     return result, err
 }
