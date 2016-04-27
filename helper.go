@@ -22,6 +22,7 @@ var Ontology = ontology{
 	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
 }
 
+var FinalComponentRegexp = regexp.MustCompile("[A-Za-z]+$")
 var UUIDRegexp = regexp.MustCompile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
 var FinalUUIDRegexp = regexp.MustCompile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 
@@ -31,4 +32,8 @@ func UUID(url string) string {
 
 func FinalUUID(url string) string {
 	return FinalUUIDRegexp.FindString(url)
+}
+
+func FinalComponent(url string) string {
+    return FinalComponentRegexp.FindString(url)
 }

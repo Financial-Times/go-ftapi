@@ -11,6 +11,7 @@ import (
 
 type Client struct {
     Key string
+    Auth string
 }
 
 func (c *Client) FromURL(url string, obj interface{}) (error) {
@@ -40,6 +41,10 @@ func (c *Client) FromURLWithCookie(url string, obj interface{}, cookie *http.Coo
     }
 
     req.Header.Add("X-API-Key", c.Key)
+
+    if c.Auth != "" {
+        req.Header.Add("Authorization", c.Auth)
+    }
 
     if cookie != nil {
         req.AddCookie(cookie)
