@@ -3,6 +3,7 @@ package ftapi
 import "net/http"
 
 type NextSession struct {
+    RawJSON        *[]byte
     EMailAddress   string `json:"emailAddress"`
     ERightsID      string `json:"erightsId"`
     FirstName      string `json:"firstName"`
@@ -22,7 +23,8 @@ func (c *Client) NextSessionFromCookie(cookie *http.Cookie) (*NextSession, error
 
 	url := "https://session-next.ft.com/"
 	result := &NextSession{}
-	err := c.FromURLWithCookie(url, result, cookie)
+	raw, err := c.FromURLWithCookie(url, result, cookie)
+    result.RawJSON = raw
 	return result, err
 
 }

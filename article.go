@@ -1,6 +1,9 @@
 package ftapi
 
+import "time"
+
 type Annotation struct {
+    RawJSON    *[]byte
 	APIURL     string   `json:"apiUrl"`
 	DirectType string   `json:"directType"`
 	ID         string   `json:"id"`
@@ -11,6 +14,7 @@ type Annotation struct {
 }
 
 type Article struct {
+    RawJSON     *[]byte
 	Annotations []Annotation `json:"annotations"`
 	BodyXML     string       `json:"bodyXML"`
 	Brands      []string     `json:"brands"`
@@ -19,7 +23,8 @@ type Article struct {
 	MainImage   struct {
 		ID string `json:"id"`
 	} `json:"mainImage"`
-	PublishedDate string `json:"publishedDate"`
+	PublishedDate time.Time
+	RawPublishedDate string `json:"publishedDate"`
 	RequestURL    string `json:"requestUrl"`
 	Title         string `json:"title"`
 	Type          string `json:"type"`
@@ -27,6 +32,11 @@ type Article struct {
 	Comments      struct {
 		Enabled bool `json:"enabled"`
 	} `json:"comments"`
+}
+
+type ArticleRef struct {
+    APIURL string `json:"apiUrl"`
+    ID     string `json:"id"`
 }
 
 func (a Article) UUID() string {
@@ -49,7 +59,18 @@ func (c *Client) EnrichedArticle(url string) (result *Article, err error) {
 
 func (c *Client) Article(url string) (result *Article, err error) {
 	result = &Article{}
-	err = c.FromURL(url, result)
+	raw, err := c.FromURL(url, result)
+    result.RawJSON = raw
+    if err == nil {
+        result.PublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
+    }
+	return result, err
+}
+
+func (c *Client) ArticleRefsAnnotatedByUUID(uuid string) (result *[]ArticleRef, err error) {
+	url := "https://api.ft.com/content?isAnnotatedBy=" + uuid
+	result = &[]ArticleRef{}
+	_, err = c.FromURL(url, result)
 	return result, err
 }
 

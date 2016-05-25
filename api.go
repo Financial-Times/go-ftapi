@@ -8,36 +8,35 @@ import (
     "fmt"
 )
 
-
 type Client struct {
     Key string
     Auth string
 }
 
-func (c *Client) FromURL(url string, obj interface{}) (error) {
+func (c *Client) FromURL(url string, obj interface{}) (*[]byte, error) {
     return c.FromURLWithCookie(url, obj, nil)
 }
 
-func (c *Client) FromPath(path string, obj interface{}) (error) {
+func (c *Client) FromPath(path string, obj interface{}) (*[]byte, error) {
     data, err := ioutil.ReadFile(path)
     if err != nil {
-        return err
+        return nil, err
     }
 
     if err := json.Unmarshal(data, &obj); err != nil {
-        return err
+        return nil, err
     }
 
-    return nil
+    return &data, nil
 }
 
-func (c *Client) FromURLWithCookie(url string, obj interface{}, cookie *http.Cookie) (error) {
+func (c *Client) FromURLWithCookie(url string, obj interface{}, cookie *http.Cookie) (*[]byte, error) {
     client := &http.Client{}
 
     req, err := http.NewRequest("GET", url, nil)
     if err != nil {
         log.Println("Failed to build a request for ",url)
-        return err
+        return nil, err
     }
 
     req.Header.Add("X-API-Key", c.Key)
@@ -53,30 +52,29 @@ func (c *Client) FromURLWithCookie(url string, obj interface{}, cookie *http.Coo
     resp, err := client.Do(req)
     if err != nil {
         log.Println("Failed to execute request for ",url)
-        return err
+        return nil, err
     }
 
     defer resp.Body.Close()
 
     if err != nil {
         log.Println("Failed to get ",url)
-        return err
+        return nil, err
     }
 
     if (resp.StatusCode != 200) {
-        return fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
+        return nil, fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
     }
 
-    if err := json.NewDecoder(resp.Body).Decode(obj); err != nil {
-        read, err2 := ioutil.ReadAll(resp.Body)
-        if err2 != nil {
-            log.Println("Failed to decode JSON and encountered an error trying to read the body")
-        } else {
-            log.Println("Failed to decode JSON from",read)
-        }
-        return err
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        log.Println("Failed to read body from ",url)
     }
 
-    return nil
+    if err := json.Unmarshal(body, obj); err != nil {
+        log.Println("Failed to decode JSON from ",url)
+        return nil, err
+    }
+
+    return &body, nil
 }
-

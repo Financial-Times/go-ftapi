@@ -15,6 +15,7 @@ type Recommendation struct {
 }
 
 type Recommendations struct {
+    RawJSON    *[]byte
 	Articles []Recommendation `json:"articles"`
 	Status   string           `json:"status"`
 	Type     string           `json:"type"`
@@ -30,7 +31,8 @@ func (c *Client) RawContextualRecommendationsByUUID(uuid string, count int, rece
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.FromURL(u.String(), result)
+	raw, err := c.FromURL(u.String(), result)
+    result.RawJSON = raw
 	return result, err
 }
 
@@ -52,7 +54,8 @@ func (c *Client) RawBehaviouralRecommendationsByUUID(uuid string, userid string,
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.FromURL(u.String(), result)
+	raw, err := c.FromURL(u.String(), result)
+    result.RawJSON = raw
 	return result, err
 }
 
@@ -73,7 +76,8 @@ func (c *Client) RawBehaviouralRecommendations(userid string, count int, recency
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.FromURL(u.String(), result)
+	raw, err := c.FromURL(u.String(), result)
+    result.RawJSON = raw
 	return result, err
 }
 
@@ -92,7 +96,8 @@ func (c *Client) RawPopularRecommendations(count int, recency int) (result *Reco
 	q.Set("recency", strconv.Itoa(recency))
 	u.RawQuery = q.Encode()
 	result = &Recommendations{}
-	err = c.FromURL(u.String(), result)
+	raw, err := c.FromURL(u.String(), result)
+    result.RawJSON = raw
 	return result, err
 }
 

@@ -5,6 +5,7 @@ import ( "time"
          "log" )
 
 type ImageSet struct {
+    RawJSON    *[]byte
 	Description string `json:"description"`
 	ID          string `json:"id"`
 	Members     []struct {
@@ -23,7 +24,8 @@ func (c *Client) ImageSetByUUID(uuid string) (result *ImageSet, err error) {
 
 func (c *Client) ImageSet(url string) (result *ImageSet, err error) {
 	result = &ImageSet{}
-	err = c.FromURL(url, result)
+	raw, err := c.FromURL(url, result)
+    result.RawJSON = raw
 	return result, err
 }
 

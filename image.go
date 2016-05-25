@@ -1,6 +1,7 @@
 package ftapi
 
 type Image struct {
+    RawJSON       *[]byte
     BinaryURL     string  `json:"binaryUrl"`
     Description   string  `json:"description"`
     ID            string  `json:"id"`
@@ -19,6 +20,7 @@ func (c *Client) ImageByUUID(uuid string) (result *Image, err error) {
 
 func (c *Client) Image(url string) (result *Image, err error) {
     result = &Image{}
-    err = c.FromURL(url, result)
+    raw, err := c.FromURL(url, result)
+    result.RawJSON = raw
     return result, err
 }

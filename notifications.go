@@ -12,6 +12,7 @@ type Notification struct {
 }
 
 type Notifications struct {
+    RawJSON    *[]byte
     Links []struct {
         Href string `json:"href"`
         Rel  string `json:"rel"`
@@ -32,7 +33,8 @@ func (c *Client) RawNotificationsSince(since time.Time) (*Notifications, error) 
 
 	url := "https://api.ft.com/content/notifications/?since=" + string(rfcSince)
 	result := &Notifications{}
-	err = c.FromURL(url, result)
+	raw, err := c.FromURL(url, result)
+    result.RawJSON = raw
 	return result, err
 }
 
@@ -56,7 +58,8 @@ func (c *Client) NextRawNotifications(after *Notifications) (*Notifications, err
     log.Printf("%s -> %s", after.RequestURL, sinceURL)
 
 	result := &Notifications{}
-	err := c.FromURL(sinceURL, result)
+	raw, err := c.FromURL(sinceURL, result)
+    result.RawJSON = raw
 	return result, err
 }
 

@@ -1,11 +1,12 @@
 package ftapi
 
 type Thing struct {
-        APIURL     string   `json:"apiUrl"`
-        DirectType string   `json:"directType"`
-        ID         string   `json:"id"`
-        PrefLabel  string   `json:"prefLabel"`
-        Types      []string `json:"types"`
+    RawJSON    *[]byte
+    APIURL     string   `json:"apiUrl"`
+    DirectType string   `json:"directType"`
+    ID         string   `json:"id"`
+    PrefLabel  string   `json:"prefLabel"`
+    Types      []string `json:"types"`
 }
 
 func (c *Client) ThingByUUID(uuid string) (result *Thing, err error) {
@@ -15,6 +16,7 @@ func (c *Client) ThingByUUID(uuid string) (result *Thing, err error) {
 
 func (c *Client) Thing(url string) (result *Thing, err error) {
     result = &Thing{}
-    err = c.FromURL(url, result)
+    raw, err := c.FromURL(url, result)
+    result.RawJSON = raw
     return result, err
 }
