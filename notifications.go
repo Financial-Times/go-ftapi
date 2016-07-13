@@ -11,6 +11,14 @@ type Notification struct {
     Type   string `json:"type"`
 }
 
+func (n *Notification) IsUpdate() bool {
+    return n.Type=="http://www.ft.com/thing/ThingChangeType/UPDATE"
+}
+
+func (n *Notification) IsDelete() bool {
+    return n.Type=="http://www.ft.com/thing/ThingChangeType/DELETE"
+}
+
 type Notifications struct {
     RawJSON    *[]byte
     Links []struct {
