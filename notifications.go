@@ -127,7 +127,7 @@ func (c *Client) Listen(start time.Time, sleep time.Duration) (chan Notification
         }
 
         for {
-            if result.Notifications == nil {
+            if result == nil || result.Notifications == nil {
                 log.Printf("Notifications was nil")
             } else {
                 for _, notification := range result.Notifications {
@@ -138,9 +138,11 @@ func (c *Client) Listen(start time.Time, sleep time.Duration) (chan Notification
 
             time.Sleep(sleep)
 
-            result, err = c.NextRawNotifications(result)
+            next, err := c.NextRawNotifications(result)
             if err != nil {
                 log.Println("Error getting notifications:",err)
+            } else {
+                result = next
             }
         }
     }()

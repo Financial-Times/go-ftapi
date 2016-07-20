@@ -12,6 +12,8 @@ type ontology struct {
 	Article        string
 	Mentions       string
 	IsClassifiedBy string
+    Genre          string
+    Section        string
 }
 
 var Ontology = ontology{
@@ -22,6 +24,8 @@ var Ontology = ontology{
 	Person:         "http://www.ft.com/ontology/person/Person",
 	Brand:          "http://www.ft.com/ontology/product/Brand",
 	Article:        "http://www.ft.com/ontology/content/Article",
+	Genre:          "http://www.ft.com/ontology/Genre",
+	Section:        "http://www.ft.com/ontology/Section",
 	Mentions:       "http://www.ft.com/ontology/annotation/mentions",
 	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
 }
