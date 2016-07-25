@@ -30,7 +30,7 @@ var Ontology = ontology{
 	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
 }
 
-func (o *ontology) GetTypes(t string) []string {
+func (o *ontology) AllTypes(t string) []string {
     switch t {
     case o.PublicCompany:
         return []string{o.Thing, o.Organisation, o.Company, o.PublicCompany}
