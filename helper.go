@@ -3,29 +3,37 @@ package ftapi
 import "regexp"
 
 type ontology struct {
-	Thing          string
-	Organisation   string
-	Company        string
-	PublicCompany  string
-	Person         string
-	Brand          string
 	Article        string
+	Brand          string
+	Company        string
+	Genre          string
+	Location	string
+	Organisation   string
+	Person         string
+	PublicCompany  string
+	Section		string
+	Subject		string
+	Thing          string
+	Topic		string
+
 	Mentions       string
 	IsClassifiedBy string
-    Genre          string
-    Section        string
 }
 
 var Ontology = ontology{
-	Thing:          "http://www.ft.com/ontology/thing/Thing",
-	Organisation:   "http://www.ft.com/ontology/organisation/Organisation",
-	Company:        "http://www.ft.com/ontology/company/Company",
-	PublicCompany:  "http://www.ft.com/ontology/company/PublicCompany",
-	Person:         "http://www.ft.com/ontology/person/Person",
-	Brand:          "http://www.ft.com/ontology/product/Brand",
 	Article:        "http://www.ft.com/ontology/content/Article",
-	Genre:          "http://www.ft.com/ontology/Genre",
-	Section:        "http://www.ft.com/ontology/Section",
+	Brand:          "http://www.ft.com/ontology/product/Brand",
+	Company:        "http://www.ft.com/ontology/company/Company",
+	Genre:          "http://www.ft.com/ontology/content/Genre",
+	Location:	"http://www.ft.com/ontology/location/Location",
+	Organisation:   "http://www.ft.com/ontology/organisation/Organisation",
+	Person:         "http://www.ft.com/ontology/person/Person",
+	PublicCompany:  "http://www.ft.com/ontology/company/PublicCompany",
+	Section:        "http://www.ft.com/ontology/classification/Section",
+	Subject:        "http://www.ft.com/ontology/classification/Subject",
+	Thing:          "http://www.ft.com/ontology/thing/Thing",
+	Topic:          "http://www.ft.com/ontology/classification/Topic",
+
 	Mentions:       "http://www.ft.com/ontology/annotation/mentions",
 	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
 }
