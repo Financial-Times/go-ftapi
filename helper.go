@@ -5,13 +5,16 @@ import "regexp"
 type ontology struct {
 	Article        string
 	Brand          string
+	Classification	string
 	Company        string
+	Concept		string
 	Genre          string
 	Location	string
 	Organisation   string
 	Person         string
 	PublicCompany  string
 	Section		string
+	SpecialReport	string
 	Subject		string
 	Thing          string
 	Topic		string
@@ -23,16 +26,19 @@ type ontology struct {
 var Ontology = ontology{
 	Article:        "http://www.ft.com/ontology/content/Article",
 	Brand:          "http://www.ft.com/ontology/product/Brand",
+	Classification: "http://www.ft.com/ontology/classification/Classification",
 	Company:        "http://www.ft.com/ontology/company/Company",
+	Concept:        "http://www.ft.com/ontology/concept/Concept",
 	Genre:          "http://www.ft.com/ontology/content/Genre",
 	Location:	"http://www.ft.com/ontology/location/Location",
 	Organisation:   "http://www.ft.com/ontology/organisation/Organisation",
 	Person:         "http://www.ft.com/ontology/person/Person",
 	PublicCompany:  "http://www.ft.com/ontology/company/PublicCompany",
 	Section:        "http://www.ft.com/ontology/classification/Section",
+	SpecialReport:	"http://www.ft.com/ontology/classification/SpecialReport",
 	Subject:        "http://www.ft.com/ontology/classification/Subject",
-	Thing:          "http://www.ft.com/ontology/thing/Thing",
-	Topic:          "http://www.ft.com/ontology/classification/Topic",
+	Thing:          "http://www.ft.com/ontology/core/Thing",
+	Topic:          "http://www.ft.com/ontology/topic/Topic",
 
 	Mentions:       "http://www.ft.com/ontology/annotation/mentions",
 	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
@@ -41,11 +47,21 @@ var Ontology = ontology{
 func (o *ontology) AllTypes(t string) []string {
     switch t {
     case o.PublicCompany:
-        return []string{o.Thing, o.Organisation, o.Company, o.PublicCompany}
+        return []string{o.Thing, o.Concept, o.Organisation, o.Company, t}
     case o.Company:
-        return []string{o.Thing, o.Organisation, o.Company}
-    default:
+        return []string{o.Thing, o.Concept, o.Organisation, t}
+    case o.Mentions:
         return []string{o.Thing, t}
+    case o.IsClassifiedBy:
+        return []string{o.Thing, t}
+    case o.Section:
+        return []string{o.Thing, o.Concept, o.Classification, t}
+    case o.SpecialReport:
+        return []string{o.Thing, o.Concept, o.Classification, t}
+    case o.Subject:
+        return []string{o.Thing, o.Concept, o.Classification, t}
+    default:
+        return []string{o.Thing, o.Concept, t}
     }
 }
 
