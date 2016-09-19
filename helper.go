@@ -19,8 +19,11 @@ type ontology struct {
 	Thing          string
 	Topic		string
 
+	About		string
 	Mentions       string
 	IsClassifiedBy string
+	IsPrimarilyClassifiedBy string
+	CreatedBy string
 }
 
 var Ontology = ontology{
@@ -40,8 +43,11 @@ var Ontology = ontology{
 	Thing:          "http://www.ft.com/ontology/core/Thing",
 	Topic:          "http://www.ft.com/ontology/topic/Topic",
 
+	About:          "http://www.ft.com/ontology/annotation/about",
 	Mentions:       "http://www.ft.com/ontology/annotation/mentions",
 	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
+	IsPrimarilyClassifiedBy: "http://www.ft.com/ontology/annotation/isPrimarilyClassifiedBy",
+	CreatedBy:      "http://www.ft.com/ontology/annotation/createdBy",
 }
 
 func (o *ontology) AllTypes(t string) []string {
