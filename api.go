@@ -1,80 +1,103 @@
 package ftapi
 
 import (
-    "encoding/json"
-    "io/ioutil"
-    "log"
-    "net/http"
-    "fmt"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 type Client struct {
-    Key string
-    Auth string
+	Key  string
+	Auth string
 }
 
 func (c *Client) FromURL(url string, obj interface{}) (*[]byte, error) {
-    return c.FromURLWithCookie(url, obj, nil)
+	return c.do(url, nil, nil, obj)
+}
+
+func (c *Client) FromURLWithBody(url string, body []byte, obj interface{}) (*[]byte, error) {
+	return c.do(url, body, nil, obj)
 }
 
 func (c *Client) FromPath(path string, obj interface{}) (*[]byte, error) {
-    data, err := ioutil.ReadFile(path)
-    if err != nil {
-        return nil, err
-    }
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
 
-    if err := json.Unmarshal(data, &obj); err != nil {
-        return nil, err
-    }
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return nil, err
+	}
 
-    return &data, nil
+	return &data, nil
 }
 
 func (c *Client) FromURLWithCookie(url string, obj interface{}, cookie *http.Cookie) (*[]byte, error) {
-    client := &http.Client{}
+	return c.do(url, nil, cookie, obj)
+}
 
-    req, err := http.NewRequest("GET", url, nil)
-    if err != nil {
-        log.Println("Failed to build a request for ",url)
-        return nil, err
-    }
+func (c *Client) do(url string, body []byte, cookie *http.Cookie, obj interface{}) (*[]byte, error) {
+	client := &http.Client{}
 
-    req.Header.Add("X-API-Key", c.Key)
+	var req *http.Request
+	var err error
 
-    if c.Auth != "" {
-        req.Header.Add("Authorization", c.Auth)
-    }
+	log.Println(url)
+	if body == nil {
+		req, err = http.NewRequest("GET", url, nil)
+		if err != nil {
+			log.Println("Failed to build a GET request for ", url)
+			return nil, err
+		}
+	} else {
+		req, err = http.NewRequest("POST", url, bytes.NewReader(body))
+		log.Println(string(body))
+		if err != nil {
+			log.Println("Failed to build a POST request for ", url)
+			log.Println(body)
+			return nil, err
+		}
+	}
 
-    if cookie != nil {
-        req.AddCookie(cookie)
-    }
+	req.Header.Add("X-API-Key", c.Key)
 
-    resp, err := client.Do(req)
-    if err != nil {
-        log.Println("Failed to execute request for ",url)
-        return nil, err
-    }
+	if c.Auth != "" {
+		req.Header.Add("Authorization", c.Auth)
+	}
 
-    defer resp.Body.Close()
+	if cookie != nil {
+		req.AddCookie(cookie)
+	}
 
-    if err != nil {
-        log.Println("Failed to get ",url)
-        return nil, err
-    }
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println("Failed to execute request for ", url)
+		return nil, err
+	}
 
-    if (resp.StatusCode != 200) {
-        return nil, fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
-    }
+	defer resp.Body.Close()
 
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        log.Println("Failed to read body from ",url)
-    }
+	if err != nil {
+		log.Println("Failed to get ", url)
+		return nil, err
+	}
 
-    if err := json.Unmarshal(body, obj); err != nil {
-        log.Println("Failed to decode JSON from ",url)
-        return nil, err
-    }
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
+	}
 
-    return &body, nil
+	rbody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Println("Failed to read body from ", url)
+	}
+
+	if err := json.Unmarshal(rbody, obj); err != nil {
+		log.Println("Failed to decode JSON from ", url)
+		return nil, err
+	}
+
+	return &rbody, nil
 }
