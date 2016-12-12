@@ -19,6 +19,7 @@ type Article struct {
 	BodyXML     string       `json:"bodyXML"`
 	Brands      []string     `json:"brands"`
 	Byline      string       `json:"byline"`
+	CanBeSyndicated string	 `json:"canBeSyndicated"`
 	ID          string       `json:"id"`
 	MainImage   struct {
 		ID string `json:"id"`
@@ -26,6 +27,12 @@ type Article struct {
 	PublishedDate time.Time
 	RawPublishedDate string `json:"publishedDate"`
 	RequestURL    string `json:"requestUrl"`
+	Standfirst    string `json:"standfirst"`
+	Standout      struct {
+		EditorsChoice bool `json:"editorsChoice"`
+		Exclusive bool `json:"exclusive"`
+		Scoop bool `json:"scoop"`
+	} `json:"standout"`
 	Title         string `json:"title"`
 	Type          string `json:"type"`
 	WebURL        string `json:"webUrl"`
