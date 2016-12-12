@@ -54,7 +54,8 @@ func (c *Client) do(url string, body []byte, cookie *http.Cookie, obj interface{
 		}
 	} else {
 		req, err = http.NewRequest("POST", url, bytes.NewReader(body))
-		log.Println(string(body))
+		req.Header.Add("Content-Type", "application/json")
+		log.Printf("POST %s\nbody: %s\n", url, string(body))
 		if err != nil {
 			log.Println("Failed to build a POST request for ", url)
 			log.Println(body)
@@ -74,14 +75,14 @@ func (c *Client) do(url string, body []byte, cookie *http.Cookie, obj interface{
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Println("Failed to execute request for ", url)
+		log.Printf("Failed to execute request for %s:%s\n", url, err.Error())
 		return nil, err
 	}
 
 	defer resp.Body.Close()
 
 	if err != nil {
-		log.Println("Failed to get ", url)
+		log.Printf("Failed to get %s:%s\n", url, err.Error())
 		return nil, err
 	}
 
