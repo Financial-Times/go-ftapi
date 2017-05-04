@@ -22,6 +22,7 @@ type ontology struct {
 	About		string
 	MajorMentions   string
 	Mentions       string
+	HasAuthor	string
 	IsClassifiedBy string
 	IsPrimarilyClassifiedBy string
 	CreatedBy string
@@ -47,6 +48,7 @@ var Ontology = ontology{
 	About:          "http://www.ft.com/ontology/annotation/about",
 	MajorMentions:       "http://www.ft.com/ontology/annotation/majorMentions",
 	Mentions:       "http://www.ft.com/ontology/annotation/mentions",
+	HasAuthor:       "http://www.ft.com/ontology/annotation/hasAuthor",
 	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
 	IsPrimarilyClassifiedBy: "http://www.ft.com/ontology/annotation/isPrimarilyClassifiedBy",
 	CreatedBy:      "http://www.ft.com/ontology/annotation/createdBy",
