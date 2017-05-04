@@ -74,10 +74,10 @@ func (c *Client) Article(url string) (result *Article, err error) {
 	return result, err
 }
 
-func (c *Client) ArticleRefsAnnotatedByUUID(uuid string) (result *[]ArticleRef, err error) {
+func (c *Client) ArticleRefsAnnotatedByUUID(uuid string) (result []ArticleRef, err error) {
 	url := "https://api.ft.com/content?isAnnotatedBy=" + uuid
-	result = &[]ArticleRef{}
-	_, err = c.FromURL(url, result)
+	result = []ArticleRef{}
+	_, err = c.FromURL(url, &result)
 	return result, err
 }
 
