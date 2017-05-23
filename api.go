@@ -49,7 +49,12 @@ func (c *Client) doLimitedTimes(url string, body []byte, cookie *http.Cookie, ob
 		return nil, fmt.Errorf("Too many redirects: %s", url)
 	}
 
-	client := &http.Client{}
+	client := &http.Client{
+	    CheckRedirect: func(req *http.Request, via []*http.Request) error {
+		// Don't let golang follow redirects, as it won't add the X-Api-Key to the second request :(
+        	return http.ErrUseLastResponse
+	    },
+	}
 
 	var req *http.Request
 	var err error
@@ -97,7 +102,7 @@ func (c *Client) doLimitedTimes(url string, body []byte, cookie *http.Cookie, ob
 	log.Printf("%d %s",resp.StatusCode,url)
 
 	switch resp.StatusCode {
-	case 301, 302, 303, 307:
+	case 301, 302, 303, 307, 308:
 		l, err := resp.Location()
 		if err != nil {
 			return nil, err
