@@ -39,7 +39,16 @@ func (c *Client) FromURLWithCookie(url string, obj interface{}, cookie *http.Coo
 	return c.do(url, nil, cookie, obj)
 }
 
+
 func (c *Client) do(url string, body []byte, cookie *http.Cookie, obj interface{}) (*[]byte, error) {
+	return c.doLimitedTimes(url, body, cookie, obj, 5)
+}
+
+func (c *Client) doLimitedTimes(url string, body []byte, cookie *http.Cookie, obj interface{}, times int) (*[]byte, error) {
+	if times == 0 {
+		return nil, fmt.Errorf("Too many redirects: %s", url)
+	}
+
 	client := &http.Client{}
 
 	var req *http.Request
@@ -86,19 +95,26 @@ func (c *Client) do(url string, body []byte, cookie *http.Cookie, obj interface{
 		return nil, err
 	}
 
-	if resp.StatusCode != 200 {
+	switch resp.StatusCode {
+	case 301, 302, 303, 307:
+		l, err := resp.Location()
+		if err != nil {
+			return nil, err
+		}
+		return c.doLimitedTimes(l.String(), body, cookie, obj, times-1)
+	case 200:
+		rbody, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Println("Failed to read body from ", url)
+		}
+
+		if err := json.Unmarshal(rbody, obj); err != nil {
+			log.Println("Failed to decode JSON from ", url)
+			return nil, err
+		}
+
+		return &rbody, nil
+	default:
 		return nil, fmt.Errorf("%s %s", resp.Status, http.StatusText(resp.StatusCode))
 	}
-
-	rbody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Println("Failed to read body from ", url)
-	}
-
-	if err := json.Unmarshal(rbody, obj); err != nil {
-		log.Println("Failed to decode JSON from ", url)
-		return nil, err
-	}
-
-	return &rbody, nil
 }
