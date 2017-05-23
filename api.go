@@ -54,7 +54,6 @@ func (c *Client) doLimitedTimes(url string, body []byte, cookie *http.Cookie, ob
 	var req *http.Request
 	var err error
 
-	log.Println(url)
 	if body == nil {
 		req, err = http.NewRequest("GET", url, nil)
 		if err != nil {
@@ -94,6 +93,8 @@ func (c *Client) doLimitedTimes(url string, body []byte, cookie *http.Cookie, ob
 		log.Printf("Failed to get %s:%s\n", url, err.Error())
 		return nil, err
 	}
+
+	log.Printf("%d %s",resp.StatusCode,url)
 
 	switch resp.StatusCode {
 	case 301, 302, 303, 307:
