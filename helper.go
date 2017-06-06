@@ -8,6 +8,8 @@ type ontology struct {
 	Classification	string
 	Company        string
 	Concept		string
+	Content		string
+	ContentPackage		string
 	Genre          string
 	Location	string
 	Organisation   string
@@ -34,6 +36,8 @@ var Ontology = ontology{
 	Classification: "http://www.ft.com/ontology/classification/Classification",
 	Company:        "http://www.ft.com/ontology/company/Company",
 	Concept:        "http://www.ft.com/ontology/concept/Concept",
+	Content:        "http://www.ft.com/ontology/content/Content",
+	ContentPackage:        "http://www.ft.com/ontology/content/ContentPackage",
 	Genre:          "http://www.ft.com/ontology/content/Genre",
 	Location:	"http://www.ft.com/ontology/location/Location",
 	Organisation:   "http://www.ft.com/ontology/organisation/Organisation",
