@@ -35,6 +35,7 @@ type Article struct {
 	} `json:"standout"`
 	Title         string `json:"title"`
 	Type          string `json:"type"`
+	Types          string `json:"types"`
 	WebURL        string `json:"webUrl"`
 	Comments      struct {
 		Enabled bool `json:"enabled"`
