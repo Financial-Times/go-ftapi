@@ -9,11 +9,11 @@ type Organisation struct {
     Thing
     Labels     []string `json:"labels"`
     LEICode    string `json:"leiCode"`
-    IndustryClassification Thing `json:"industryClassification"`
-    ParentOrganisation Thing `json:"parentOrganisation"`
+    IndustryClassification *Thing `json:"industryClassification"`
+    ParentOrganisation *Thing `json:"parentOrganisation"`
     Subsidiaries []Thing `json:"subsidiaries"`
     Memberships []Membership `json:"memberships"`
-    FinancialInstrument Thing `json:"financialInstrument"`
+    FinancialInstrument *Thing `json:"financialInstrument"`
 }
 
 func (c *Client) OrganisationByUUID(uuid string) (result *Organisation, err error) {
