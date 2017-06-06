@@ -17,7 +17,7 @@ func TestRawNotifications(t *testing.T) {
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
-    test_notifications_client = &ftapi.Client{key}
+    test_notifications_client = &ftapi.Client{key, ""}
 
     result, err := test_notifications_client.RawNotificationsSince(time.Now().Add(-96 * time.Hour))
 

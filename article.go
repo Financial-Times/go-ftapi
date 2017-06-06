@@ -3,24 +3,18 @@ package ftapi
 import "time"
 
 type Annotation struct {
-    RawJSON    *[]byte
-	APIURL     string   `json:"apiUrl"`
-	DirectType string   `json:"directType"`
-	ID         string   `json:"id"`
-	Predicate  string   `json:"predicate"`
-	PrefLabel  string   `json:"prefLabel"`
+    	Thing
+    	Predicate  string   `json:"predicate"`
 	Type       string   `json:"type"`
-	Types      []string `json:"types"`
 }
 
 type Article struct {
-    RawJSON     *[]byte
+	Thing
 	Annotations []Annotation `json:"annotations"`
 	BodyXML     string       `json:"bodyXML"`
 	Brands      []string     `json:"brands"`
 	Byline      string       `json:"byline"`
 	CanBeSyndicated string	 `json:"canBeSyndicated"`
-	ID          string       `json:"id"`
 	MainImage   struct {
 		ID string `json:"id"`
 	} `json:"mainImage"`
@@ -35,7 +29,6 @@ type Article struct {
 	} `json:"standout"`
 	Title         string `json:"title"`
 	Type          string `json:"type"`
-	Types         []string `json:"types"`
 	WebURL        string `json:"webUrl"`
 	Comments      struct {
 		Enabled bool `json:"enabled"`

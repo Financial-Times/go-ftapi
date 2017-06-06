@@ -10,34 +10,34 @@ import (
 
 var test_recommendations_client *ftapi.Client
 
-func TestContextualRecommendationsByUuid(t *testing.T) {
+func TestContextualRecommendationsByUUID(t *testing.T) {
     a := assert.New(t)
 
     key := os.Getenv("RR_API_KEY")
     log.Println("Using API key: ",key)
-    test_recommendations_client = &ftapi.Client{key}
+    test_recommendations_client = &ftapi.Client{key, ""}
 
-    result, err := test_recommendations_client.ContextualRecommendationsByUuid("24b6f48a-c675-11e5-b3b1-7b2481276e45", 10, 7)
+    result, err := test_recommendations_client.ContextualRecommendationsByUUID("24b6f48a-c675-11e5-b3b1-7b2481276e45", 10, 7)
 
     a.Nil(err)
 
     if a.NotNil(result) {
-        a.Equal(10, len(result.Articles))
+        a.Equal(10, len(result))
     }
 }
 
-func TestBehaviouralRecommendationsByUuid(t *testing.T) {
+func TestBehaviouralRecommendationsByUUID(t *testing.T) {
     a := assert.New(t)
 
     userid := os.Getenv("FT_USERID")
     log.Println("Using user id: ",userid)
 
-    result, err := test_recommendations_client.BehaviouralRecommendationsByUuid("24b6f48a-c675-11e5-b3b1-7b2481276e45", userid, 10, 7)
+    result, err := test_recommendations_client.BehaviouralRecommendationsByUUID("24b6f48a-c675-11e5-b3b1-7b2481276e45", userid, 10, 7)
 
     a.Nil(err)
 
     if a.NotNil(result) {
-        a.Equal(10, len(result.Articles))
+        a.Equal(10, len(result))
     }
 }
 
@@ -52,7 +52,7 @@ func TestBehaviouralRecommendations(t *testing.T) {
     a.Nil(err)
 
     if a.NotNil(result) {
-        a.Equal(10, len(result.Articles))
+        a.Equal(10, len(result))
     }
 }
 
@@ -64,6 +64,6 @@ func TestPopularRecommendations(t *testing.T) {
     a.Nil(err)
 
     if a.NotNil(result) {
-        a.Equal(10, len(result.Articles))
+        a.Equal(10, len(result))
     }
 }
