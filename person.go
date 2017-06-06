@@ -6,6 +6,7 @@ type ChangeEvent struct {
 }
 
 type Membership struct {
+    Title string `json:"title"`
     Organisation  *Thing `json:"organisation"`
     ChangeEvents  []ChangeEvent `json:"changeEvents"`
 }
