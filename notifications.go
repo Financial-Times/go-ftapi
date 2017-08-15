@@ -9,6 +9,8 @@ type Notification struct {
     APIURL string `json:"apiUrl"`
     ID     string `json:"id"`
     Type   string `json:"type"`
+    Title  string `json:"title"`
+    Standout      Standout `json:"standout"`
 }
 
 func (n *Notification) IsUpdate() bool {

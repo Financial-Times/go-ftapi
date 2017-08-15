@@ -8,6 +8,12 @@ type Annotation struct {
 	Type       string   `json:"type"`
 }
 
+type Standout struct {
+	EditorsChoice bool `json:"editorsChoice"`
+	Exclusive bool `json:"exclusive"`
+	Scoop bool `json:"scoop"`
+}
+
 type Article struct {
 	Thing
 	Annotations []Annotation `json:"annotations"`
@@ -22,11 +28,7 @@ type Article struct {
 	RawPublishedDate string `json:"publishedDate"`
 	RequestURL    string `json:"requestUrl"`
 	Standfirst    string `json:"standfirst"`
-	Standout      struct {
-		EditorsChoice bool `json:"editorsChoice"`
-		Exclusive bool `json:"exclusive"`
-		Scoop bool `json:"scoop"`
-	} `json:"standout"`
+	Standout      Standout `json:"standout"`
 	Title         string `json:"title"`
 	Type          string `json:"type"`
 	WebURL        string `json:"webUrl"`
