@@ -21,9 +21,9 @@ type Article struct {
 	Brands      []string     `json:"brands"`
 	Byline      string       `json:"byline"`
 	CanBeSyndicated string	 `json:"canBeSyndicated"`
-	MainImage   struct {
-		ID string `json:"id"`
-	} `json:"mainImage"`
+	CanBeDistributed string  `json:"canBeDistributed"`
+	Embeds      []ImageSet      `json:"embeds"`
+	MainImage   ImageSet        `json:"mainImage"`
 	PublishedDate time.Time
 	RawPublishedDate string `json:"publishedDate"`
 	RequestURL    string `json:"requestUrl"`

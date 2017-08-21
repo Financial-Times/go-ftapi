@@ -8,9 +8,7 @@ type ImageSet struct {
     RawJSON    *[]byte
 	Description string `json:"description"`
 	ID          string `json:"id"`
-	Members     []struct {
-		ID string `json:"id"`
-	} `json:"members"`
+	Members     []Image `json:"members"`
 	PublishedDate string `json:"publishedDate"`
 	RequestURL    string `json:"requestUrl"`
 	Title         string `json:"title"`
