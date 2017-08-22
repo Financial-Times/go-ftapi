@@ -38,7 +38,7 @@ var Ontology = ontology{
 	Concept:        "http://www.ft.com/ontology/concept/Concept",
 	Content:        "http://www.ft.com/ontology/content/Content",
 	ContentPackage:        "http://www.ft.com/ontology/content/ContentPackage",
-	Genre:          "http://www.ft.com/ontology/content/Genre",
+	Genre:          "http://www.ft.com/ontology/Genre",
 	Location:	"http://www.ft.com/ontology/location/Location",
 	Organisation:   "http://www.ft.com/ontology/organisation/Organisation",
 	Person:         "http://www.ft.com/ontology/person/Person",
