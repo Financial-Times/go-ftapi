@@ -37,11 +37,6 @@ type Article struct {
 	} `json:"comments"`
 }
 
-type ArticleRef struct {
-    APIURL string `json:"apiUrl"`
-    ID     string `json:"id"`
-}
-
 func (a Article) UUID() string {
 	return FinalUUID(a.ID)
 }
@@ -70,16 +65,9 @@ func (c *Client) Article(url string) (result *Article, err error) {
 	return result, err
 }
 
-func (c *Client) ArticleRefsAnnotatedByUUID(uuid string) (result []ArticleRef, err error) {
-	url := "https://api.ft.com/content?isAnnotatedBy=" + uuid
-	result = []ArticleRef{}
-	_, err = c.FromURL(url, &result)
-	return result, err
-}
-
 func (c *Client) MainImageSet(article *Article) (result *ImageSet, err error) {
-	if article.MainImage.ID == "" {
-		return nil, nil
-	}
-	return c.ImageSet(article.MainImage.ID)
+    if article.MainImage.ID == "" {
+        return nil, nil
+    }
+    return c.ImageSet(article.MainImage.ID)
 }
