@@ -22,10 +22,12 @@ type ontology struct {
 	Topic		string
 
 	About		string
+	ImplicitlyAbout		string
 	MajorMentions   string
 	Mentions       string
 	HasAuthor	string
 	IsClassifiedBy string
+	ImplicitlyClassifiedBy string
 	IsPrimarilyClassifiedBy string
 	CreatedBy string
 }
@@ -50,11 +52,13 @@ var Ontology = ontology{
 	Topic:          "http://www.ft.com/ontology/topic/Topic",
 
 	About:          "http://www.ft.com/ontology/annotation/about",
+	ImplicitlyAbout:          "http://www.ft.com/ontology/annotation/implicitlyAbout",
 	MajorMentions:       "http://www.ft.com/ontology/annotation/majorMentions",
 	Mentions:       "http://www.ft.com/ontology/annotation/mentions",
 	HasAuthor:       "http://www.ft.com/ontology/annotation/hasAuthor",
-	IsClassifiedBy: "http://www.ft.com/ontology/annotation/isClassifiedBy",
-	IsPrimarilyClassifiedBy: "http://www.ft.com/ontology/annotation/isPrimarilyClassifiedBy",
+	IsClassifiedBy: "http://www.ft.com/ontology/classification/isClassifiedBy",
+	ImplicitlyClassifiedBy: "http://www.ft.com/ontology/implicitlyClassifiedBy",
+	IsPrimarilyClassifiedBy: "http://www.ft.com/ontology/classification/isPrimarilyClassifiedBy",
 	CreatedBy:      "http://www.ft.com/ontology/annotation/createdBy",
 }
 

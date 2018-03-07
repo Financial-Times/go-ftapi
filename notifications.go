@@ -6,6 +6,7 @@ import (
 )
 
 type Notification struct {
+    RawJSON []byte
     APIURL string `json:"apiUrl"`
     ID     string `json:"id"`
     Type   string `json:"type"`
