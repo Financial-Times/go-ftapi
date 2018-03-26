@@ -62,7 +62,10 @@ func (c *Client) ConceptSearch(s string) (result []Thing, err error) {
     q := u.Query()
     q.Set("mode", "search")
     q.Set("q", s)
-    q.Set("type", Ontology.Topic)
+    q.Set("type", NewOntology.Topic)
+    q.Add("type", NewOntology.Organisation)
+    q.Add("type", NewOntology.Location)
+    q.Add("type", NewOntology.Person)
     u.RawQuery = q.Encode()
     resp := &ConceptSearchResponse{}
 

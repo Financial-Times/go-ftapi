@@ -32,6 +32,7 @@ type ontology struct {
 	CreatedBy string
 }
 
+
 var Ontology = ontology{
 	Article:        "http://www.ft.com/ontology/content/Article",
 	Brand:          "http://www.ft.com/ontology/product/Brand",
@@ -60,6 +61,38 @@ var Ontology = ontology{
 	ImplicitlyClassifiedBy: "http://www.ft.com/ontology/implicitlyClassifiedBy",
 	IsPrimarilyClassifiedBy: "http://www.ft.com/ontology/classification/isPrimarilyClassifiedBy",
 	CreatedBy:      "http://www.ft.com/ontology/annotation/createdBy",
+}
+
+// At some point, we intend to drop the 'intermediate' ontologies in these URIs.
+
+var NewOntology = ontology{
+	Article:        "http://www.ft.com/ontology/Article",
+	Brand:          "http://www.ft.com/ontology/Brand",
+	Classification: "http://www.ft.com/ontology/Classification",
+	Company:        "http://www.ft.com/ontology/Company",
+	Concept:        "http://www.ft.com/ontology/Concept",
+	Content:        "http://www.ft.com/ontology/Content",
+	ContentPackage:        "http://www.ft.com/ontology/ContentPackage",
+	Genre:          "http://www.ft.com/ontology/Genre",
+	Location:	"http://www.ft.com/ontology/Location",
+	Organisation:   "http://www.ft.com/ontology/Organisation",
+	Person:         "http://www.ft.com/ontology/Person",
+	PublicCompany:  "http://www.ft.com/ontology/PublicCompany",
+	Section:        "http://www.ft.com/ontology/Section",
+	SpecialReport:	"http://www.ft.com/ontology/SpecialReport",
+	Subject:        "http://www.ft.com/ontology/Subject",
+	Thing:          "http://www.ft.com/ontology/Thing",
+	Topic:          "http://www.ft.com/ontology/Topic",
+
+	About:          "http://www.ft.com/ontology/about",
+	ImplicitlyAbout:          "http://www.ft.com/ontology/implicitlyAbout",
+	MajorMentions:       "http://www.ft.com/ontology/majorMentions",
+	Mentions:       "http://www.ft.com/ontology/mentions",
+	HasAuthor:       "http://www.ft.com/ontology/hasAuthor",
+	IsClassifiedBy: "http://www.ft.com/ontology/isClassifiedBy",
+	ImplicitlyClassifiedBy: "http://www.ft.com/ontology/implicitlyClassifiedBy",
+	IsPrimarilyClassifiedBy: "http://www.ft.com/ontology/isPrimarilyClassifiedBy",
+	CreatedBy:      "http://www.ft.com/ontology/createdBy",
 }
 
 func (o *ontology) AllTypes(t string) []string {
