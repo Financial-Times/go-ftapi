@@ -111,6 +111,10 @@ func (o *ontology) AllTypes(t string) []string {
         return []string{o.Thing, o.Concept, o.Classification, t}
     case o.Subject:
         return []string{o.Thing, o.Concept, o.Classification, t}
+    case o.Brand:
+        return []string{o.Thing, o.Concept, o.Classification, t}
+    case o.Genre:
+        return []string{o.Thing, o.Concept, o.Classification, t}
     default:
         return []string{o.Thing, o.Concept, t}
     }
