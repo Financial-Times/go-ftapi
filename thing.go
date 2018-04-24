@@ -56,16 +56,28 @@ func (c *Client) Concept(url string) (result *Concept, err error) {
 }
 
 func (c *Client) ConceptSearch(s string) (result []Thing, err error) {
+    return c.ConceptSearchByTypes(s, []string{
+        NewOntology.Topic,
+        Ontology.Organisation,
+        NewOntology.Location,
+        Ontology.Person,
+    })
+}
+
+func (c *Client) ConceptSearchByTypes(s string, types []string) (result []Thing, err error) {
     result = []Thing{}
+
+    if len(types) == 0 {
+        return result, nil
+    }
 
     u, _ := url.Parse("https://api.ft.com/concepts")
     q := u.Query()
     q.Set("mode", "search")
     q.Set("q", s)
-    q.Set("type", NewOntology.Topic)
-    q.Add("type", Ontology.Organisation)
-    q.Add("type", NewOntology.Location)
-    q.Add("type", Ontology.Person)
+    for _, t := range types {
+        q.Add("type", t)
+    }
     u.RawQuery = q.Encode()
     resp := &ConceptSearchResponse{}
 
