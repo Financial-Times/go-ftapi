@@ -16,7 +16,7 @@ func TestImageSet(t *testing.T) {
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
-    test_imageset_client = &ftapi.Client{key, ""}
+    test_imageset_client = ftapi.NewClient(key)
 
     result, err := test_imageset_client.ImageSetByUUID("e1ee1f3a-8fbe-11e5-1582-a29c65546762")
 

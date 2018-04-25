@@ -15,7 +15,7 @@ func TestContextualRecommendationsByUUID(t *testing.T) {
 
     key := os.Getenv("RR_API_KEY")
     log.Println("Using API key: ",key)
-    test_recommendations_client = &ftapi.Client{key, ""}
+    test_recommendations_client = ftapi.NewClient(key)
 
     result, err := test_recommendations_client.ContextualRecommendationsByUUID("24b6f48a-c675-11e5-b3b1-7b2481276e45", 10, 7)
 

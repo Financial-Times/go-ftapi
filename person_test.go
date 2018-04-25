@@ -16,7 +16,7 @@ func TestPerson(t *testing.T) {
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
-    test_person_client = &ftapi.Client{key, ""}
+    test_person_client = ftapi.NewClient(key)
 
     result, err := test_person_client.PersonByUUID("535c8b74-b14d-3f32-9923-4dfdb4a97f5f")
 

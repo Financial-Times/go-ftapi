@@ -16,7 +16,7 @@ func TestSuggest(t *testing.T) {
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
-    test_suggest_client = &ftapi.Client{key, ""}
+    test_suggest_client = ftapi.NewClient(key)
 
     art := &ftapi.Article{
         BodyXML: "Test suggestion body which mentions the Financial Times",

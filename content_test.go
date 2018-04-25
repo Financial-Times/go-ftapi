@@ -15,7 +15,7 @@ func TestContentRefsAnnotatedByUUID(t *testing.T) {
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
-    test_content_client = &ftapi.Client{key, ""}
+    test_content_client = ftapi.NewClient(key)
 
     result, err := test_content_client.ContentRefsAnnotatedByUUID("9b40e89c-e87b-3d4f-b72c-2cf7511d2146",14) // News
 

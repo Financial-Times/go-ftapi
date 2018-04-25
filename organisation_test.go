@@ -16,7 +16,7 @@ func TestOrganisation(t *testing.T) {
 
     key := os.Getenv("FT_API_KEY")
     log.Println("Using API key: ",key)
-    test_organisation_client = &ftapi.Client{key, ""}
+    test_organisation_client = ftapi.NewClient(key)
 
     result, err := test_organisation_client.OrganisationByUUID("d90be6d9-e941-3da4-a28d-e5339f7f896f")
 
