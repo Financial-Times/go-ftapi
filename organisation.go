@@ -17,7 +17,7 @@ type Organisation struct {
 }
 
 func (c *Client) OrganisationByUUID(uuid string) (result *Organisation, err error) {
-    url := "https://api.ft.com/organisations/"+uuid
+    url := "/organisations/"+uuid
     return c.Organisation(url)
 }
 

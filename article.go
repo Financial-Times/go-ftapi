@@ -42,12 +42,12 @@ func (a Article) UUID() string {
 }
 
 func (c *Client) ArticleByUUID(uuid string) (result *Article, err error) {
-	url := "https://api.ft.com/content/" + uuid
+	url := "/content/" + uuid
 	return c.Article(url)
 }
 
 func (c *Client) EnrichedArticleByUUID(uuid string) (result *Article, err error) {
-	url := "https://api.ft.com/enrichedcontent/" + uuid
+	url := "/enrichedcontent/" + uuid
 	return c.Article(url)
 }
 

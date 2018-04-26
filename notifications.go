@@ -42,7 +42,7 @@ func (c *Client) RawNotificationsSince(since time.Time) (*Notifications, error) 
         return nil, err
     }
 
-	url := "https://api.ft.com/content/notifications/?since=" + string(rfcSince)
+	url := "/content/notifications/?since=" + string(rfcSince)
 	result := &Notifications{}
 	raw, err := c.FromURL(url, result)
     result.RawJSON = raw

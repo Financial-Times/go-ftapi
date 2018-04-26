@@ -14,7 +14,7 @@ type Image struct {
 }
 
 func (c *Client) ImageByUUID(uuid string) (result *Image, err error) {
-    url := "https://api.ft.com/content/"+uuid
+    url := "/content/"+uuid
     return c.Image(url)
 }
 

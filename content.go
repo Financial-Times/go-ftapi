@@ -13,7 +13,7 @@ func (c *Client) ContentRefsAnnotatedByUUID(uuid string, limit int) (result []Co
     if limit != 0 {
         limitQuery = fmt.Sprintf("&limit=%d", limit)
     }
-    url := fmt.Sprintf("https://api.ft.com/content?isAnnotatedBy=%s%s",uuid,limitQuery)
+    url := fmt.Sprintf("/content?isAnnotatedBy=%s%s",uuid,limitQuery)
     result = []ContentRef{}
     _, err = c.FromURL(url, &result)
     return result, err
@@ -24,7 +24,7 @@ func (c *Client) ContentRefsAnnotatedByUUIDWithTimeWindow(uuid string, limit int
     if limit != 0 {
         limitQuery = fmt.Sprintf("&limit=%d", limit)
     }
-    url := fmt.Sprintf("https://api.ft.com/content?isAnnotatedBy=%s&fromDate=%s&toDate=%s%s", uuid, fromDate.Format("2006-01-02"), toDate.Format("2006-01-02"), limitQuery)
+    url := fmt.Sprintf("/content?isAnnotatedBy=%s&fromDate=%s&toDate=%s%s", uuid, fromDate.Format("2006-01-02"), toDate.Format("2006-01-02"), limitQuery)
     result = []ContentRef{}
     _, err = c.FromURL(url, &result)
     return result, err

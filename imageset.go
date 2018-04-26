@@ -16,7 +16,7 @@ type ImageSet struct {
 }
 
 func (c *Client) ImageSetByUUID(uuid string) (result *ImageSet, err error) {
-	url := "https://api.ft.com/content/" + uuid
+	url := "/content/" + uuid
 	return c.ImageSet(url)
 }
 

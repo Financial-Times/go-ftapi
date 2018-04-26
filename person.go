@@ -26,7 +26,7 @@ type Person struct {
 }
 
 func (c *Client) PersonByUUID(uuid string) (result *Person, err error) {
-    url := "https://api.ft.com/people/"+uuid
+    url := "/people/"+uuid
     return c.Person(url)
 }
 

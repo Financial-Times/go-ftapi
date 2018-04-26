@@ -15,7 +15,7 @@ func (c *Client) Suggest(article *Article) (result *SuggestResponse, err error) 
     }
 
     result = &SuggestResponse{}
-    raw, err := c.FromURLWithBody("https://api.ft.com/content/suggest", articleJSON, result)
+    raw, err := c.FromURLWithBody("/content/suggest", articleJSON, result)
     result.RawJSON = raw
     return result, err
 }

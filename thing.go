@@ -32,7 +32,7 @@ type ConceptSearchResponse struct {
 }
 
 func (c *Client) ThingByUUID(uuid string) (result *Thing, err error) {
-    url := "https://api.ft.com/things/"+uuid
+    url := "/things/"+uuid
     return c.Thing(url)
 }
 
@@ -44,7 +44,7 @@ func (c *Client) Thing(url string) (result *Thing, err error) {
 }
 
 func (c *Client) ConceptByUUID(uuid string) (result *Concept, err error) {
-    url := "https://api.ft.com/things/"+uuid
+    url := "/things/"+uuid
     return c.Concept(url)
 }
 
@@ -71,7 +71,7 @@ func (c *Client) ConceptSearchByTypes(s string, types []string) (result []Thing,
         return result, nil
     }
 
-    u, _ := url.Parse("https://api.ft.com/concepts")
+    u, _ := url.Parse("/concepts")
     q := u.Query()
     q.Set("mode", "search")
     q.Set("q", s)

@@ -43,7 +43,7 @@ type RecommendationConfig struct {
 }
 
 func (c *Client) RawContextualRecommendationsByUUID(uuid string, count int, recency int) (result *Recommendations, err error) {
-	u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/contextual")
+	u, err := url.Parse("/recommended-reads-api/recommend/contextual")
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (c *Client) RawContextualRecommendationsByUUID(uuid string, count int, rece
 }
 
 func (c *Client) RawContextualRecommendationsByDocument(doc *RecommendationDocument, weights *RecommendationWeights, count int, recency int) (result *Recommendations, err error) {
-	u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/contextual/doc")
+	u, err := url.Parse("/recommended-reads-api/recommend/contextual/doc")
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (c *Client) ContextualRecommendationsByString(s string, count int, recency 
 }
 
 func (c *Client) RawBehaviouralRecommendationsByUUID(uuid string, userid string, count int, recency int) (result *Recommendations, err error) {
-	u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/behavioural")
+	u, err := url.Parse("/recommended-reads-api/recommend/behavioural")
 	q := u.Query()
 	q.Set("contentid", uuid)
 	q.Set("userid", userid)
@@ -121,7 +121,7 @@ func (c *Client) BehaviouralRecommendationsByUUID(uuid string, userid string, co
 }
 
 func (c *Client) RawBehaviouralRecommendations(userid string, count int, recency int) (result *Recommendations, err error) {
-	u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/behavioural")
+	u, err := url.Parse("/recommended-reads-api/recommend/behavioural")
 	q := u.Query()
 	q.Set("userid", userid)
 	q.Set("count", strconv.Itoa(count))
@@ -143,7 +143,7 @@ func (c *Client) BehaviouralRecommendations(userid string, count int, recency in
 }
 
 func (c *Client) RawPopularRecommendations(count int, recency int) (result *Recommendations, err error) {
-	u, err := url.Parse("https://api.ft.com/recommended-reads-api/recommend/popular")
+	u, err := url.Parse("/recommended-reads-api/recommend/popular")
 	q := u.Query()
 	q.Set("count", strconv.Itoa(count))
 	q.Set("recency", strconv.Itoa(recency))
