@@ -22,6 +22,7 @@ type Article struct {
 	Byline      string       `json:"byline"`
 	CanBeSyndicated string	 `json:"canBeSyndicated"`
 	CanBeDistributed string  `json:"canBeDistributed"`
+        EditorialDesk string     `json:"editorialDesk"`
 	Embeds      []ImageSet      `json:"embeds"`
 	MainImage   ImageSet        `json:"mainImage"`
 	PublishedDate time.Time
@@ -53,6 +54,15 @@ func (c *Client) EnrichedArticleByUUID(uuid string) (result *Article, err error)
 
 func (c *Client) EnrichedArticle(url string) (result *Article, err error) {
 	return c.EnrichedArticleByUUID(FinalUUID(url))
+}
+
+func (c *Client) InternalArticleByUUID(uuid string) (result *Article, err error) {
+	url := "/internalcontent/" + uuid
+	return c.Article(url)
+}
+
+func (c *Client) InternalArticle(url string) (result *Article, err error) {
+	return c.InternalArticleByUUID(FinalUUID(url))
 }
 
 func (c *Client) Article(url string) (result *Article, err error) {
