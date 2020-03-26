@@ -3,39 +3,39 @@ package ftapi
 import "time"
 
 type Annotation struct {
-    	Thing
-    	Predicate  string   `json:"predicate"`
-	Type       string   `json:"type"`
+	Thing
+	Predicate string `json:"predicate"`
+	Type      string `json:"type"`
 }
 
 type Standout struct {
 	EditorsChoice bool `json:"editorsChoice"`
-	Exclusive bool `json:"exclusive"`
-	Scoop bool `json:"scoop"`
+	Exclusive     bool `json:"exclusive"`
+	Scoop         bool `json:"scoop"`
 }
 
 type Article struct {
 	Thing
-	Annotations []Annotation `json:"annotations"`
-	BodyXML     string       `json:"bodyXML"`
-	Brands      []string     `json:"brands"`
-	Byline      string       `json:"byline"`
-	CanBeSyndicated string	 `json:"canBeSyndicated"`
-	CanBeDistributed string  `json:"canBeDistributed"`
-        EditorialDesk string     `json:"editorialDesk"`
-	Embeds      []ImageSet      `json:"embeds"`
-	MainImage   ImageSet        `json:"mainImage"`
-	PublishedDate time.Time
-	RawPublishedDate string `json:"publishedDate"`
-	FirstPublishedDate time.Time
-	RawFirstPublishedDate string `json:"publishedDate"`
-	RequestURL    string `json:"requestUrl"`
-	Standfirst    string `json:"standfirst"`
-	Standout      Standout `json:"standout"`
-	Title         string `json:"title"`
-	Type          string `json:"type"`
-	WebURL        string `json:"webUrl"`
-	Comments      struct {
+	Annotations           []Annotation `json:"annotations"`
+	BodyXML               string       `json:"bodyXML"`
+	Brands                []string     `json:"brands"`
+	Byline                string       `json:"byline"`
+	CanBeSyndicated       string       `json:"canBeSyndicated"`
+	CanBeDistributed      string       `json:"canBeDistributed"`
+	EditorialDesk         string       `json:"editorialDesk"`
+	Embeds                []ImageSet   `json:"embeds"`
+	MainImage             ImageSet     `json:"mainImage"`
+	PublishedDate         time.Time
+	RawPublishedDate      string `json:"publishedDate"`
+	FirstPublishedDate    time.Time
+	RawFirstPublishedDate string   `json:"firstPublishedDate"`
+	RequestURL            string   `json:"requestUrl"`
+	Standfirst            string   `json:"standfirst"`
+	Standout              Standout `json:"standout"`
+	Title                 string   `json:"title"`
+	Type                  string   `json:"type"`
+	WebURL                string   `json:"webUrl"`
+	Comments              struct {
 		Enabled bool `json:"enabled"`
 	} `json:"comments"`
 }
@@ -77,13 +77,13 @@ func (c *Client) Article(url string) (result *Article, err error) {
 	result.PublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
 	if result.RawFirstPublishedDate != "" {
 		result.FirstPublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawFirstPublishedDate)
-        }
+	}
 	return result, err
 }
 
 func (c *Client) MainImageSet(article *Article) (result *ImageSet, err error) {
-    if article.MainImage.ID == "" {
-        return nil, nil
-    }
-    return c.ImageSet(article.MainImage.ID)
+	if article.MainImage.ID == "" {
+		return nil, nil
+	}
+	return c.ImageSet(article.MainImage.ID)
 }
