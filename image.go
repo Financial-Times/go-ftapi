@@ -5,10 +5,12 @@ type Image struct {
     BinaryURL     string  `json:"binaryUrl"`
     Description   string  `json:"description"`
     ID            string  `json:"id"`
+    MasterSource  Identifier `json:"masterSource"`
     PixelHeight   int     `json:"pixelHeight"`
     PixelWidth    int     `json:"pixelWidth"`
     PublishedDate string  `json:"publishedDate"`
     RequestURL    string  `json:"requestUrl"`
+    RightsGroup   string  `json:"rightsGroup"`
     Title         string  `json:"title"`
     Type          string  `json:"type"`
 }

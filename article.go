@@ -27,6 +27,8 @@ type Article struct {
 	MainImage   ImageSet        `json:"mainImage"`
 	PublishedDate time.Time
 	RawPublishedDate string `json:"publishedDate"`
+	FirstPublishedDate time.Time
+	RawFirstPublishedDate string `json:"publishedDate"`
 	RequestURL    string `json:"requestUrl"`
 	Standfirst    string `json:"standfirst"`
 	Standout      Standout `json:"standout"`
@@ -68,10 +70,14 @@ func (c *Client) InternalArticle(url string) (result *Article, err error) {
 func (c *Client) Article(url string) (result *Article, err error) {
 	result = &Article{}
 	raw, err := c.FromURL(url, result)
-    result.RawJSON = raw
-    if err == nil {
-        result.PublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
-    }
+	result.RawJSON = raw
+	if err != nil {
+		return result, err
+	}
+	result.PublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
+	if result.RawFirstPublishedDate != "" {
+		result.FirstPublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawFirstPublishedDate)
+        }
 	return result, err
 }
 
