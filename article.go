@@ -75,7 +75,9 @@ func (c *Client) Article(url string) (result *Article, err error) {
 		return result, err
 	}
 	result.PublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
-	if result.RawFirstPublishedDate != "" {
+	if result.RawFirstPublishedDate == "" {
+		result.FirstPublishedDate = result.PublishedDate
+	} else {
 		result.FirstPublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawFirstPublishedDate)
 	}
 	return result, err
