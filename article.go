@@ -22,10 +22,13 @@ type Article struct {
 	Byline      string       `json:"byline"`
 	CanBeSyndicated string	 `json:"canBeSyndicated"`
 	CanBeDistributed string  `json:"canBeDistributed"`
+	EditorialDesk string     `json:"editorialDesk"`
 	Embeds      []ImageSet      `json:"embeds"`
 	MainImage   ImageSet        `json:"mainImage"`
+	FirstPublishedDate time.Time
 	PublishedDate time.Time
 	RawPublishedDate string `json:"publishedDate"`
+	RawFirstPublishedDate string `json:"firstPublishedDate"`
 	RequestURL    string `json:"requestUrl"`
 	Standfirst    string `json:"standfirst"`
 	Standout      Standout `json:"standout"`
@@ -58,10 +61,18 @@ func (c *Client) EnrichedArticle(url string) (result *Article, err error) {
 func (c *Client) Article(url string) (result *Article, err error) {
 	result = &Article{}
 	raw, err := c.FromURL(url, result)
-    result.RawJSON = raw
-    if err == nil {
-        result.PublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
-    }
+	result.RawJSON = raw
+	if err == nil {
+		result.PublishedDate, parseErr := time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
+		if result.RawFirstPublishedDate == "" {
+			result.FirstPublishedDate = result.PublishedDate
+		} else {
+			result.FirstPublishedDate, parseErr = time.Parse("2006-01-02T15:04:05.000Z", result.RawFirstPublishedDate)
+		}
+		if parseErr != nil {
+			err = parseErr
+		}
+	}
 	return result, err
 }
 
