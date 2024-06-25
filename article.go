@@ -3,7 +3,7 @@ package ftapi
 import "time"
 
 type Annotation struct {
-    	Thing
+	Thing
     	Predicate  string   `json:"predicate"`
 	Type       string   `json:"type"`
 }
@@ -63,14 +63,13 @@ func (c *Client) Article(url string) (result *Article, err error) {
 	raw, err := c.FromURL(url, result)
 	result.RawJSON = raw
 	if err == nil {
-		result.PublishedDate, parseErr := time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
-		if result.RawFirstPublishedDate == "" {
-			result.FirstPublishedDate = result.PublishedDate
-		} else {
-			result.FirstPublishedDate, parseErr = time.Parse("2006-01-02T15:04:05.000Z", result.RawFirstPublishedDate)
-		}
-		if parseErr != nil {
-			err = parseErr
+		result.PublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawPublishedDate)
+		if err == nil {
+			if(result.RawPublishedDate == ""){
+				result.FirstPublishedDate = result.PublishedDate
+			} else {
+				result.FirstPublishedDate, err = time.Parse("2006-01-02T15:04:05.000Z", result.RawFirstPublishedDate)
+			}
 		}
 	}
 	return result, err
